@@ -1,0 +1,105 @@
+<div class="pdv-wrapper">
+  <h2 class="pdv-title">Venda em Aberto</h2>
+  <div class="pdv-main">
+    <!-- Tabela de itens -->
+    <div class="pdv-table">
+      <table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Quantidade</th>
+      <th>Nome</th>
+      <th>Preço</th>
+      <th>Total</th>
+      <th>Ação</th> <!-- Nova coluna -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of itensVenda; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ item.quantidade }}</td>
+      <td>{{ item.nome }}</td>
+      <td>R$ {{ item.preco | number:'1.2-2' }}</td>
+      <td>R$ {{ (item.preco * item.quantidade) | number:'1.2-2' }}</td>
+      <td>
+        <button  color="warn" class="remover-item" (click)="removerItemVenda(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </tr>
+    <tr *ngIf="itensVenda.length === 0">
+      <td colspan="6" class="text-center">Nenhum item adicionado</td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+    <!-- Painel lateral -->
+    <div class="pdv-side">
+  <div class="pdv-logo">
+    <img src="assets/logo-pdv.png" alt="Logo" style="max-width: 100px; margin-bottom: 10px;">
+    <div style="font-size: 1.5em; font-weight: bold;">PDV <span class="pdv-web">Web</span></div>
+  </div>
+<div class="pdv-form">
+  <mat-form-field appearance="outline" style="width: 100%;">
+  <mat-label>Produto (código ou nome)</mat-label>
+  <input
+    matInput
+    type="text"
+    [(ngModel)]="produtoBusca"
+    [matAutocomplete]="auto"
+    (ngModelChange)="filtrarProdutos($event)"
+    autocomplete="off"
+  />
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selecionarProduto($event)">
+    <mat-option *ngFor="let prod of produtosFiltrados" [value]="prod.nome">
+      {{ prod.id }} - {{ prod.nome }}
+    </mat-option>
+    <mat-option *ngIf="produtosFiltrados.length === 0" disabled>
+      Nenhum produto encontrado
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+  <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-label>Quantidade</mat-label>
+    <input matInput type="number" [(ngModel)]="quantidade" min="1" />
+  </mat-form-field>
+  <button class="btn-incluir" (click)="adicionarProdutoSelecionado()">
+    Incluir Produto
+  </button>
+</div>
+</div>
+  </div>
+  <button class="btn-finalizar" (click)="abrirModalFinalizarVenda()" [disabled]="itensVenda.length === 0">
+  Concluir Venda
+</button>
+
+<!-- Modal de finalização -->
+<ng-template #modalFinalizarVenda>
+  <h2 mat-dialog-title>Finalizar Venda</h2>
+  <mat-dialog-content>
+    <mat-form-field style="width: 100%;">
+      <mat-label>Cliente</mat-label>
+      <input matInput [matAutocomplete]="autoCliente" [(ngModel)]="clienteBusca" (ngModelChange)="filtrarClientes($event)">
+      <mat-autocomplete #autoCliente="matAutocomplete" (optionSelected)="selecionarCliente($event)">
+        <mat-option *ngFor="let c of clientesFiltrados" [value]="c.nome">{{ c.nome }}</mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <mat-label>Forma de Pagamento</mat-label>
+      <input matInput [matAutocomplete]="autoFP" [(ngModel)]="formaPagamentoBusca" (ngModelChange)="filtrarFormasPagamento($event)">
+      <mat-autocomplete #autoFP="matAutocomplete" (optionSelected)="selecionarFormaPagamento($event)">
+        <mat-option *ngFor="let f of formasPagamentoFiltradas" [value]="f.nome">{{ f.nome }}</mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button class="btn-cancelar" >Cancelar</button>
+    <button class="btn-finalizar" (click)="finalizarVenda(clienteSelecionado, formaPagamentoSelecionada)" [disabled]="!clienteSelecionado || !formaPagamentoSelecionada">
+      Confirmar
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+  <div class="pdv-total">
+    Valor total a pagar: <b>R$ {{ valorTotal | number:'1.2-2' }}</b>
+  </div>
+</div>

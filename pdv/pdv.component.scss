@@ -1,0 +1,153 @@
+.pdv-wrapper {
+  background: #fafbfc;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 80%;
+  margin: 32px auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.pdv-title {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 1.6em;
+  font-weight: 600;
+}
+
+.pdv-main {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.pdv-table {
+  flex: 2;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  padding: 16px;
+}
+
+.pdv-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pdv-table th, .pdv-table td {
+  padding: 8px 10px;
+  font-size: 14px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.pdv-table th {
+  background: #f5f5f5;
+  font-weight: 600;
+}
+
+.pdv-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  padding: 24px 16px;
+  min-width: 250px;
+}
+
+.pdv-logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.pdv-web {
+  color: #a259d9;
+  font-weight: 700;
+}
+
+.pdv-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pdv-form input {
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+
+.pdv-total {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: 500;
+}
+
+.pdv-total b {
+  font-size: 1.2em;
+  color: #018199;
+}
+
+.btn-incluir {
+  width: 100%;
+  background-color: #018199;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-incluir:hover {
+  background-color: #016f7d;
+}
+
+.btn-finalizar {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 18px;
+    font-size: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 8px;
+    margin: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-finalizar:hover {
+    background-color: #45a049;
+}
+
+.btn-cancelar {
+    margin: 10px;
+    background-color: rgb(206, 71, 94);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 18px;
+    font-size: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-cancelar:hover {
+    background-color: rgb(158, 46, 65);;
+}
+
+.remover-item {
+    color: rgb(206, 71, 94);
+    font: 6px;
+}

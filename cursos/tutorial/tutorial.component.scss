@@ -1,0 +1,61 @@
+.video-container {
+    margin: 10px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+.btn-next {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: none;
+    background: transparent;
+}
+
+.btn-next mat-icon {
+    
+    font-size: 24px;
+    line-height: 1;
+    width: 100%; /* Garante que o ícone ocupe toda a largura do botão */
+    height: 100%; /* Garante que o ícone ocupe toda a altura do botão */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-next:hover {
+   color: rgb(255, 255, 255);
+   background-color: rgb(5, 136, 0);
+}
+
+.btn-container {
+    width: 60%;
+    justify-content: center;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: auto; /* Adiciona margem automática à esquerda */
+    margin-right: auto; /* Adiciona margem automática à direita */
+    transition: all ease 0.3s;
+}
+
+
+  .title-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* Garante que o texto fique centralizado */
+  }
+
+  .title {
+    font-size: 22px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  }
+  .sub-title {
+    font-size: 15px;
+  }
+  

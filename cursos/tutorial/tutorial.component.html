@@ -1,0 +1,84 @@
+<p *ngIf="cursoId">Exibindo informações do curso ID: {{ cursoId }}</p>
+
+
+<div *ngIf="cursoId === '1'">
+<mat-stepper #stepper [linear]="true">
+    <!-- Primeiro Passo -->
+    <mat-step [completed]="firstStepCompleted">
+        <div class="title-content">
+            <p class="title">Aula 1</p>
+            <p class="sub-title">Assista a esse vídeo até o final para avançar</p>
+        </div>
+        <div class="video-container">
+            <video #videoPlayer width="60%" controls (ended)="concluirPrimeiroPasso()">
+                <source src="assets/tutorial.mp4" type="video/mp4">
+                Seu navegador não suporta a tag de vídeo.
+            </video>
+        </div>
+        <div class="btn-container">
+            <button mat-button class="btn-next" matTooltip="Concluir aula" matStepperNext [disabled]="!firstStepCompleted">
+                <mat-icon>check_circle</mat-icon>
+            </button>
+        </div>
+    </mat-step>
+  
+    <!-- Segundo Passo -->
+    <mat-step [completed]="secondStepCompleted">
+      <p>SEGUNDO PASSO</p>
+      <button mat-button (click)="concluirSegundoPasso()">Marcar como concluído</button>
+      <button mat-button matStepperNext [disabled]="!secondStepCompleted">Próximo</button>
+    </mat-step>
+  
+    <!-- Passo Final -->
+    <mat-step>
+      <ng-template matStepLabel>Finalizado</ng-template>
+      <p>Você concluiu o tutorial!</p>
+      <div>
+        <button mat-button matStepperPrevious>Voltar</button>
+        <button mat-button (click)="stepper.reset()">Reiniciar</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>
+
+<div *ngIf="cursoId === '2'">
+  <mat-stepper #stepper [linear]="true">
+    <!-- Primeiro Passo -->
+    <mat-step [completed]="firstStepCompleted">
+      <ng-template matStepLabel>Aula 1</ng-template>
+        <div class="title-content">
+            <p class="title">Aula 1</p>
+            <p class="sub-title">Assista a esse vídeo até o final para avançar</p>
+        </div>
+        <div class="video-container">
+            <video #videoPlayer width="60%" controls (ended)="concluirPrimeiroPasso()">
+                <source src="assets/tutorial_2.mp4" type="video/mp4">
+                Seu navegador não suporta a tag de vídeo.
+            </video>
+        </div>
+        <div class="btn-container">
+            <button mat-button class="btn-next" matTooltip="Concluir aula" matStepperNext [disabled]="!firstStepCompleted">
+                <mat-icon>check_circle</mat-icon>
+            </button>
+        </div>
+    </mat-step>
+  
+    <!-- Segundo Passo -->
+    <mat-step [completed]="secondStepCompleted">
+      <ng-template matStepLabel>Aula 2</ng-template>
+      <p>SEGUNDO PASSO</p>
+      <button mat-button (click)="concluirSegundoPasso()">Marcar como concluído</button>
+      <button mat-button matStepperNext [disabled]="!secondStepCompleted">Próximo</button>
+    </mat-step>
+  
+    <!-- Passo Final -->
+    <mat-step>
+      <ng-template matStepLabel>Finalizado</ng-template>
+      <p>Você concluiu o tutorial!</p>
+      <div>
+        <button mat-button matStepperPrevious>Voltar</button>
+        <button mat-button (click)="stepper.reset()">Reiniciar</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>

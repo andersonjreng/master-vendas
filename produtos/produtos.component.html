@@ -1,0 +1,80 @@
+
+<!-- Campo de filtro com autocomplete -->
+<div style="display: flex; justify-content: center; margin: 20px;">
+  <mat-form-field appearance="outline" style="width: 350px;">
+    <mat-label>Pesquisar produto</mat-label>
+    <input type="text"
+           matInput
+           [formControl]="filtroNome"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+      <mat-option *ngFor="let option of nomesFiltrados | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+
+<div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px; margin-bottom: 10px;">
+  <button mat-icon-button class="btn-limpar" matTooltip="Limpar filtro">
+    <mat-icon fontSet="material-icons">backspace</mat-icon>
+  </button>
+  <button mat-icon-button class="btn-excel" matTooltip="Exportar para Excel">
+    <mat-icon fontSet="material-icons">import_export</mat-icon>
+  </button>
+  <button mat-icon-button class="btn-adicionar" matTooltip="Adicionar Produto" (click)="addProdutos()">
+    <mat-icon fontSet="material-icons">add</mat-icon>
+  </button>
+</div>
+
+<mat-table [dataSource]="dataSource">
+
+  <!-- Nome -->
+  <ng-container matColumnDef="nome">
+    <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.nome }} </mat-cell>
+  </ng-container>
+
+  <!-- Preço -->
+  <ng-container matColumnDef="preco">
+    <mat-header-cell *matHeaderCellDef> Preço </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.preco }} </mat-cell>
+  </ng-container>
+
+  <!-- Custo -->
+  <ng-container matColumnDef="custo">
+    <mat-header-cell *matHeaderCellDef> Custo </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.custo }} </mat-cell>
+  </ng-container>
+
+  <!-- Ações -->
+  <ng-container matColumnDef="acoes">
+    <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary" (click)="abrirModalEdicao(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="abrirModalExclusao(element)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<!-- <mat-paginator [pageSizeOptions]="[10, 20, 50]" [pageSize]="10" showFirstLastButtons></mat-paginator> -->
+
+<!-- Modal de edição (estrutura vazia) -->
+<div id="card-modal-edit" class="modal">
+  <div class="modal-content-arquivos">
+    <!-- Conteúdo do modal de edição -->
+  </div>
+</div>
+
+<!-- Modal de exclusão (estrutura vazia) -->
+<div id="card-modal-delete" class="modal">
+  <div class="modal-content-delete">
+    <!-- Conteúdo do modal de exclusão -->
+  </div>
+</div>

@@ -1,0 +1,181 @@
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .example-headers-align .mat-mdc-form-field + .mat-mdc-form-field {
+    margin-left: 8px;
+  }
+  
+  .example-headers-align {
+    width: 100%;
+  }
+
+  form {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    
+  }
+  
+  form div {
+    margin-bottom: 20px;
+  }
+  
+  mat-form-field {
+    margin-top: 20px;
+    flex: 1;
+    width: 100%;
+  }
+  
+  .search-field {
+    width: 50%;
+  }
+
+  .search-field mat-icon {
+    color: gray;
+    margin-right: 8px;
+  }
+  
+  .btn-acess {
+    background-color: #0aa12d;
+    border-radius: 10px;
+    padding: 10px 20px;
+    color: white;
+    margin: 10px;
+    font-size: 20px;
+  }
+  
+  .btn-cancel {
+    background-color: #a10a0a;
+    border-radius: 10px;
+    padding: 10px 20px;
+    color: white;
+    margin: 10px;
+    font-size: 20px;
+  }
+
+  
+.modal-content-arquivos {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 50%;
+  min-height: 40%;
+  max-height: 80%; /* Alterado para height em vez de max-height */
+  overflow: auto; /* Alterado para auto */
+  margin: 0 auto;
+  background-color: #fefefe;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.modal-content-links {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 50%;
+  min-height: 40%;
+  max-height: 80%; /* Alterado para height em vez de max-height */
+  overflow: auto; /* Alterado para auto */
+  margin: 0 auto;
+  background-color: #fefefe;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.modal-header {
+  background-color: rgb(61, 61, 61); /* Cor de fundo da parte superior */
+  color: #fff; /* Cor do texto da parte superior */
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-top-left-radius: 10px;
+}
+
+.modal-header-restrito {
+  background-color: rgb(172, 0, 0); /* Cor de fundo da parte superior */
+  color: #fff; /* Cor do texto da parte superior */
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-top-left-radius: 10px;
+}
+
+.close {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 3;
+}
+
+.close:hover {
+  color: rgb(253, 60, 60);
+}
+
+/* Estilos do conteúdo do modal */
+.modal-body {
+  width: 100%;
+  padding: 20px;
+  display: flex; /* Alterado de block para flex */
+  justify-content: center;
+  align-items: center; /* Adicionado para centralizar verticalmente */
+  margin-bottom: -15px;
+}
+
+
+/* Estilos do título do modal */
+.modal-title {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  text-align: center; /* Centralizar o conteúdo do modal */
+}
+
+.no-faqs-message {
+  font-size: 15px;
+  margin: 10px;
+  color: rgb(122, 122, 122);
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #d89803;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #c48900;
+}
+
+.disabled-button {
+  opacity: 0.5; /* Deixa o botão mais transparente */
+  cursor: not-allowed; /* Mostra que o botão está desabilitado */
+}

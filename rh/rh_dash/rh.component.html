@@ -1,0 +1,442 @@
+<div class="container-master">
+<div class="filters-cards">
+ <mat-form-field appearance="outline" class="filtro-data-range">
+    <mat-label>Intervalo de Datas</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input matStartDate placeholder="Data Inicial" [(ngModel)]="dateRange.start">
+      <input matEndDate placeholder="Data Final" [(ngModel)]="dateRange.end" (dateChange)="chamadaTeste()">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="filtro-usina">
+    <mat-label>Filtrar por Usina</mat-label>
+    <mat-select [formControl]="filtroUsinaControl" (selectionChange)="filtrarSolicitacoes()">
+      <mat-option *ngFor="let usina of usinasUnicas" [value]="usina">
+        {{ usina }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filtro-tipo-vaga">
+    <mat-label>Filtrar por Tipo de Vaga</mat-label>
+    <mat-select [formControl]="filtroTipoVagaControl" (selectionChange)="filtrarPorTipoVaga()">
+      <mat-option *ngFor="let tipo of tiposVagaUnicos" [value]="tipo">
+        {{ tipo }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  </div>
+
+<button mat-icon-button class="btn-add" *ngIf="permissionUserCode === '1' || permissionUserCode === '2.4'" (click)="goToAdd()"
+          matTooltip="Criar vaga">
+            <mat-icon fontSet="material-icons">person_add</mat-icon>
+          </button>
+</div>
+
+<div class="filtros-container" *ngIf="permissionUserCode === '1' || permissionUserCode === '2.4'">
+    <button
+      *ngFor="let status of filtrosStatus"
+      (click)="filtrarPorStatus(status)"
+      [class.filtro-ativo]="filtroStatusSelecionado === status"
+    >
+      {{ status }}
+    </button>
+    <button (click)="limparFiltroStatus()" class="limpar-filtro">
+      Limpar Filtros
+    </button>
+  </div>
+
+  <div class="filtros-container" *ngIf="permissionUserCode !== '1' && permissionUserCode !== '2.4'">
+    <button
+      *ngFor="let status of filtrosStatusMatriz"
+      (click)="filtrarPorStatus(status)"
+      [class.filtro-ativo]="filtroStatusSelecionado === status"
+    >
+      {{ status }}
+    </button>
+    <button (click)="limparFiltroStatus()" class="limpar-filtro">
+      Limpar Filtros
+    </button>
+  </div>
+
+
+<div class="cards-container">
+
+<div class="card" *ngFor="let s of solicitacoesFiltradas">
+  <div class="card-header">
+    <h2 class="cargo">{{ s.cargo }}</h2>
+    <div class="actions"> 
+      <span class="status"
+        [ngClass]="{
+          'pendente': s.status === 'PENDENTE',
+          'aprovado': s.status === 'APROVADO',
+          'negado': s.status === 'NEGADO',
+          'finalizado': s.status === 'FINALIZADO'
+        }" 
+      >
+        <i *ngIf="s.status === 'PENDENTE'" class="fa fa-hourglass-half"></i>
+        <i *ngIf="s.status === 'APROVADO'" class="fa fa-gem"></i>
+        <i *ngIf="s.status === 'NEGADO'" class="fa fa-exclamation-triangle"></i>
+        <i *ngIf="s.status === 'FINALIZADO'" class="fa fa-check"></i>
+        {{ s.status }}
+      </span>
+      <button *ngIf="s.status === 'PENDENTE'" class="edit-button" (click)="editarSolicitacao(s)" (click)="openModal('card-modal-editar')" >
+        <i class="fa fa-pencil"></i> </button>
+    </div>
+  </div>
+
+  <span class="subtitle">{{ s.usina }}</span>
+
+  <mat-divider></mat-divider>
+
+
+
+  <div class="card-body">
+    <div *ngIf="s.status === 'PENDENTE' || s.status === 'NEGADO'">
+      <p><strong>Solicitante:</strong> {{ s.solicitante }}</p>
+    <span class="infoCard">{{ s.tipoContratacao }}</span>
+    
+    <span class="infoCard">{{ s.setor }}</span>
+    <span class="infoCard">{{ s.nivel }}</span>
+    </div>
+    <div *ngIf="s.status !== 'PENDENTE' && s.status !== 'NEGADO'">
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+    <mat-tab label="Vaga">
+      <br>
+    <p><strong>Solicitante:</strong> {{ s.solicitante }}</p>
+    <span class="infoCard">{{ s.tipoContratacao }}</span>
+    
+    <span class="infoCard">{{ s.setor }}</span>
+    <span class="infoCard">{{ s.nivel }}</span>
+    </mat-tab>
+    <mat-tab *ngIf="permissionUserCode === '1' || permissionUserCode === '2.4' " label="Solicitações">
+      <br>
+    <div *ngIf="s.nivel === 'ADMINISTRATIVO' || s.nivel === 'SEGURANÇA DO TRABALHO'">
+      <p><strong>Suporte T.I.:</strong>
+        <span [ngClass]="getStatusClass(s.statusSolicitacaoSuporte)">{{ getStatusText(s.statusSolicitacaoSuporte) }}</span>
+      </p>
+
+      <p><strong>Departamento Pessoal:</strong>
+        <span [ngClass]="getStatusClass(s.statusSolicitacaoSuporte)">{{ getStatusText(s.statusSolicitacaoDp) }}</span>
+      </p>
+
+      <p><strong>Segurança do Trabalho:</strong>
+        <span [ngClass]="getStatusClass(s.statusSolicitacaoSuporte)">{{ getStatusText(s.statusSolicitacaoSt) }}</span>
+      </p>
+    </div>
+    <div *ngIf="s.nivel === 'OPERAÇÃO'">
+      <p><strong>Departamento Pessoal:</strong>
+        <span [ngClass]="getStatusClass(s.statusSolicitacaoSuporte)">{{ getStatusText(s.statusSolicitacaoDp) }}</span>
+      </p>
+      <p><strong>Segurança do Trabalho:</strong>
+        <span [ngClass]="getStatusClass(s.statusSolicitacaoSuporte)">{{ getStatusText(s.statusSolicitacaoSt) }}</span>
+      </p>
+    </div>
+        <div *ngIf="s.nivel === 'TECNOLOGIA / LABORATÓRIO' || s.nivel === 'LIDERANÇA' || s.nivel === 'VENDAS'">
+      <p><strong>Departamento Pessoal:</strong>
+        <span [ngClass]="getStatusClass(s.statusSolicitacaoSuporte)">{{ getStatusText(s.statusSolicitacaoDp) }}</span>
+      </p>
+      <p><strong>Segurança do Trabalho:</strong>
+        <span [ngClass]="getStatusClass(s.statusSolicitacaoSuporte)">{{ getStatusText(s.statusSolicitacaoSt) }}</span>
+      </p>
+      <p><strong>Suporte T.I.:</strong>
+        <span [ngClass]="getStatusClass(s.statusSolicitacaoSuporte)">{{ getStatusText(s.statusSolicitacaoSuporte) }}</span>
+      </p>
+      <p><strong>Suprimentos:</strong>
+        <span [ngClass]="getStatusClass(s.statusSolicitacaoSuporte)">{{ getStatusText(s.statusSolicitacaoSuprimentos) }}</span>
+      </p>
+    </div>
+    </mat-tab>
+
+    <mat-tab *ngIf="s.status === 'FINALIZADO'" style="z-index: 0;" label="Dados do colaborador">
+      <br>
+    <p><strong>Nome:</strong> {{ s.nomeColaborador }}</p>
+    <p><strong>E-mail:</strong> {{ s.emailColaborador }}</p>
+    <p><strong>CPF:</strong> {{ s.cpfColaborador }}</p>
+    <p *ngIf="permissionUserCode === '1' || permissionUserCode === '2.4' || permissionUserCode === '2.6'"><strong>Tamanho do uniforme:</strong> {{ s.tamanhoUniforme }}</p>
+    <p *ngIf="permissionUserCode === '1' || permissionUserCode === '2.4' || permissionUserCode === '2.6'"><strong>Tamanho da calça:</strong> {{ s.tamanhoCalca }}</p>
+    <p *ngIf="permissionUserCode === '1' || permissionUserCode === '2.4' || permissionUserCode === '2.6'"><strong>Tamanho da botina:</strong> {{ s.tamanhoBotina }}</p>
+    <p><strong>Data de início prevista:</strong> {{ s.dataInicioPrevista }}</p>
+  </mat-tab>
+    </mat-tab-group>
+    </div>
+    <br>
+    <br>
+    <mat-divider></mat-divider>
+    <br>
+    
+    <p><strong>Observação:</strong> {{ s.observacao }}</p>
+    <p><strong>{{ s.created_at }}</strong></p>
+    <button *ngIf="s.status === 'NEGADO'" matTooltip={{s.observacaoNegado}}
+        style="color: #ef4444;"
+        ><mat-icon>info</mat-icon></button>
+        <!-- <button *ngIf="s.status === 'PENDENTE'" matTooltip={{s.cargo}}
+        style="color: #e09813;"
+        ><mat-icon>info</mat-icon></button> -->
+  </div>
+
+  <div class="card-footer" *ngIf="s.aprovado === null">
+    <button class="btn aprovar" (click)="aprovarSolicitacao(s, 1)">
+      <mat-icon>thumb_up</mat-icon> Aprovar
+    </button>
+    <button class="btn negar" (click)="negarSolicitacao(s)">
+      <mat-icon>thumb_down</mat-icon> Negar
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="card-footer" *ngIf="s.status === 'APROVADO' && permissionUserCode === '1' || permissionUserCode === '2.4'">
+    <button class="btn finalizar" *ngIf="s.status === 'APROVADO'" (click)="openModal('card-modal-finalizar')" (click)="finalizarVaga(s.id, s)">
+      <mat-icon>check_circle</mat-icon> Finalizar vaga
+    </button>
+  </div>
+  <div class="card-footer" *ngIf="s.status === 'APROVADO' || s.status === 'FINALIZADO' && permissionUserCode !== '1' && permissionUserCode !== '2.4'">
+
+    <div *ngIf="permissionUserCode === '2.1'">
+      <button *ngIf="s.statusSolicitacaoSuporte === '0'" class="btn preparar" (click)="alterarPreparacao(s, 'statusSolicitacaoSuporte', 1)">
+      <mat-icon>check_circle</mat-icon> Iniciar preparação
+    </button>
+
+    <button *ngIf="s.statusSolicitacaoSuporte === '1'" class="btn finalizar" (click)="alterarPreparacao(s, 'statusSolicitacaoSuporte', 2)">
+      <mat-icon>check_circle</mat-icon> Finalizar Solicitação
+    </button>
+    </div>
+    <div *ngIf="permissionUserCode === '2.5'">
+      <button *ngIf="s.statusSolicitacaoDp === '0'" class="btn preparar" (click)="alterarPreparacao(s, 'statusSolicitacaoDp', 1)">
+      <mat-icon>check_circle</mat-icon> Iniciar preparação
+    </button>
+
+    <button *ngIf="s.statusSolicitacaoDp === '1'" class="btn finalizar" (click)="alterarPreparacao(s, 'statusSolicitacaoDp', 2)">
+      <mat-icon>check_circle</mat-icon> Finalizar Solicitação
+    </button>
+    </div>
+    <div *ngIf="permissionUserCode === '2.6'">
+      <button *ngIf="s.statusSolicitacaoSt === '0'" class="btn preparar" (click)="alterarPreparacao(s, 'statusSolicitacaoSt', 1)">
+      <mat-icon>check_circle</mat-icon> Iniciar preparação
+    </button>
+
+    <button *ngIf="s.statusSolicitacaoSt === '1'" class="btn finalizar" (click)="alterarPreparacao(s, 'statusSolicitacaoSt', 2)">
+      <mat-icon>check_circle</mat-icon> Finalizar Solicitação
+    </button>
+    </div>
+
+    <div *ngIf="permissionUserCode === '2.7'">
+      <button *ngIf="s.statusSolicitacaoSuprimentos === '0'" class="btn preparar" (click)="alterarPreparacao(s, 'statusSolicitacaoSuprimentos', 1)">
+      <mat-icon>check_circle</mat-icon> Iniciar preparação
+    </button>
+
+    <button *ngIf="s.statusSolicitacaoSuprimentos === '1'" class="btn finalizar" (click)="alterarPreparacao(s, 'statusSolicitacaoSuprimentos', 2)">
+      <mat-icon>check_circle</mat-icon> Finalizar Solicitação
+    </button>
+    </div>
+    
+    <!-- <button *ngIf="s.statusSolicitacao === '0'" class="btn preparar" (click)="alterarPreparacao(s, 1)">
+      <mat-icon>check_circle</mat-icon> Iniciar preparação
+    </button>
+
+    <button *ngIf="s.statusSolicitacao === '1'" class="btn finalizar" (click)="alterarPreparacao(s, 2)">
+      <mat-icon>check_circle</mat-icon> Finalizar Solicitação
+    </button> -->
+    
+  </div>
+</div>
+
+</div>
+
+<div *ngIf="solicitacoesFiltradas.length === 0 && filtroStatusSelecionado" class="mensagem-sem-resultados">
+  <mat-icon>search_off</mat-icon>
+  <br>
+    Nenhuma solicitação encontrada com o status "{{ filtroStatusSelecionado }}".
+  </div>
+
+<div id="card-modal-delete" class="modal">
+  <div class="modal-content-delete">
+    <div class="modal-header-delete">
+      <span class="modal-title">Negar solicitação</span>
+      <span class="close" (click)="closeModal('card-modal-delete')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <mat-form-field appearance="outline" class="example-full-width" style="width: 80%">
+        <textarea
+          placeholder="Observação"
+          matInput
+          [(ngModel)]="observacaoNegada"
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <div class="btns">
+      <button class="btn-confirm" (click)="aprovarSolicitacao(elementNegado, 0)">Confirmar</button>
+      <button class="btn-cancel" (click)="closeModal('card-modal-delete')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div id="card-modal-finalizar" class="modal">
+  <div class="modal-content-finalizar">
+    <div class="modal-header-finalizar">
+      <span class="modal-title">Finalizar vaga</span>
+      <span class="close" (click)="closeModal('card-modal-finalizar')">&times;</span>
+    </div>
+    <div class="modal-body">
+<form [formGroup]="colaboradorForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-div">
+          <mat-form-field class="campos-form">
+            <mat-label>Nome</mat-label>
+            <input matInput id="nomeColaborador" formControlName="nomeColaborador">
+          </mat-form-field>
+<br>
+          <mat-form-field class="campos-form">
+            <mat-label>CPF</mat-label>
+            <input matInput id="cpfColaborador" formControlName="cpfColaborador">
+          </mat-form-field>
+<br>
+           <mat-form-field class="campos-form">
+            <mat-label>E-mail</mat-label>
+            <input matInput id="emailColaborador" formControlName="emailColaborador">
+          </mat-form-field>
+<br>
+           <mat-form-field class="campos-form">
+            <mat-label>Tamanho do uniforme</mat-label>
+            <mat-select id="tamanhoUniforme" formControlName="tamanhoUniforme">
+              <mat-option *ngFor="let tamanho of tamanhosUniforme" [value]="tamanho">
+                {{ tamanho }}
+              </mat-option>
+              </mat-select>
+          </mat-form-field>
+          <mat-form-field class="campos-form">
+            <mat-label>Tamanho da calça</mat-label>
+            <input matInput id="tamanhoCalca" formControlName="tamanhoCalca">
+          </mat-form-field>
+
+          <mat-form-field class="campos-form">
+            <mat-label>Tamanho da botina</mat-label>
+            <input matInput id="tamanhoBotina" formControlName="tamanhoBotina">
+          </mat-form-field>
+
+          <mat-form-field class="campos-form">
+      <mat-label>Data de Início Prevista</mat-label>
+      <input matInput [matDatepicker]="colaboradorDatePicker" id="dataInicioPrevista" formControlName="dataInicioPrevista">
+      <mat-datepicker-toggle matSuffix [for]="colaboradorDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #colaboradorDatePicker></mat-datepicker>
+    </mat-form-field>
+
+          <mat-form-field appearance="outline" class="campos-form">
+        <textarea
+          placeholder="Observação"
+          matInput
+          id="observacaoContratacao" formControlName="observacaoContratacao"
+        ></textarea>
+      </mat-form-field>
+          </div>
+          <div>
+          <button mat-raised-button color="primary" type="submit" [disabled]="colaboradorForm.invalid" [ngClass]="{'disabled-button' : colaboradorForm.invalid}"> <mat-icon>send</mat-icon> Registrar colaborador</button>
+          <mat-progress-bar *ngIf="isSubmitting" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+        </div>
+</form>
+    </div>
+    <!-- <div class="btns">
+      <button class="btn-confirm" (click)="finalizarVaga(elementNegado)">Confirmar</button>
+      <button class="btn-cancel" (click)="closeModal('card-modal-finalizar')">Cancelar</button>
+    </div> -->
+  </div>
+</div>
+
+<div id="card-modal-editar" class="modal">
+  <div class="modal-content-finalizar">
+    <div class="modal-header-finalizar">
+      <span class="modal-title">Editar solicitação</span>
+      <span class="close" (click)="closeModal('card-modal-editar')">&times;</span>
+    </div>
+    <div class="modal-body">
+<form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()">
+
+  <mat-form-field class="field-edit">
+    <mat-label>Solicitante</mat-label>
+    <input matInput id="solicitante" formControlName="solicitante">
+  </mat-form-field>
+  <br>
+  <mat-form-field class="field-edit">
+    <mat-label>Cargo</mat-label>
+    <input matInput id="cargo" formControlName="cargo">
+  </mat-form-field>
+  <br>
+  <mat-form-field class="field-edit">
+    <mat-label>Tipo de Contratação</mat-label>
+    <mat-select id="tipoContratacao" formControlName="tipoContratacao">
+      <mat-option *ngFor="let tipo of tiposContratacao" [value]="tipo">
+        {{ tipo }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  
+<div>
+  <mat-form-field class="field-edit">
+    <mat-label>Usina</mat-label>
+    <input type="text" matInput
+           [formControl]="usinaControl"
+           id="usina"
+           formControlName="usina"
+           [matAutocomplete]="autoUsina"
+           [(ngModel)]="usinaKeyword"
+           (ngModelChange)="validacaoMatriz($event)"
+           (input)="filterUsinas()"
+           [value]="usinaKeywordName">
+    <mat-autocomplete #autoUsina="matAutocomplete" [displayWith]="displayFnUsina" (optionSelected)="optionSelectedUsina($event)">
+      <mat-option *ngFor="let option of filteredUsinas | async" [value]="option" (click)="choseUsina(option)">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="editForm.controls['usina'].hasError('required')">
+      A usina é obrigatória.
+    </mat-error>
+    <mat-error *ngIf="editForm.controls['usina'].hasError('usinaInvalida')">
+      Selecione uma usina da lista.
+    </mat-error>
+  </mat-form-field>     
+</div>
+<br>
+  <mat-form-field class="field-edit">
+    <mat-label>Setor</mat-label>
+    <input matInput id="setor" formControlName="setor">
+  </mat-form-field>
+  <br>
+   <mat-form-field class="field-edit" *ngIf="isMatriz">
+    <mat-label>Nível</mat-label>
+    <mat-select id="nivel" formControlName="nivel">
+      <mat-option *ngFor="let nivel of niveisCargos" [value]="nivel">
+        {{ nivel }}
+      </mat-option>
+      </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="field-edit" *ngIf="!isMatriz">
+    <mat-label>Nível</mat-label>
+    <mat-select id="nivel" formControlName="nivel">
+      <mat-option *ngFor="let nivel of niveisCargosUsinas" [value]="nivel">
+        {{ nivel }}
+      </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <br>
+   <mat-form-field class="field-edit">
+    <mat-label>Observação</mat-label>
+    <input matInput id="observacao" formControlName="observacao">
+  </mat-form-field>
+
+  <div>
+  <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid || isSubmitting" [ngClass]="{'disabled-button' : editForm.invalid || isSubmitting}"> <mat-icon>send</mat-icon> Editar Solicitação</button>
+  <mat-progress-bar *ngIf="isSubmitting" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+</div>
+</form>
+    </div>
+    <!-- <div class="btns">
+      <button class="btn-confirm" (click)="finalizarVaga(elementNegado)">Confirmar</button>
+      <button class="btn-cancel" (click)="closeModal('card-modal-finalizar')">Cancelar</button>
+    </div> -->
+  </div>
+</div>
+

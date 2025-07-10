@@ -1,0 +1,36 @@
+.component.scss
+
+.btn-limpar, .btn-excel, .btn-adicionar {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.btn-limpar mat-icon,
+.btn-excel mat-icon,
+.btn-adicionar mat-icon {
+  font-size: 24px;
+}
+
+.btn-limpar:hover {
+  background-color: rgb(61, 61, 61);
+  color: white;
+}
+
+.btn-excel:hover {
+  background-color: rgb(0, 146, 22);
+  color: white;
+}
+
+.btn-adicionar:hover {
+  background-color: #1976d2;
+  color: white;
+}
+
+mat-table {
+  width: 100%;
+}

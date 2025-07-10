@@ -1,0 +1,383 @@
+form {
+  width: 50%;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  
+}
+
+form div {
+  margin-bottom: 20px;
+}
+
+mat-form-field {
+  margin-top: 20px;
+  flex: 1;
+  width: 100%;
+}
+
+
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #d89803;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #c48900;
+}
+
+mat-tab-group {
+  margin-top: 20px;
+  margin: 30px;
+}
+
+@media (max-width: 600px) {
+  form {
+    max-width: 100%;
+  }
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .card {
+    margin-left: 10px;
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 15px;
+    width: 250px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+  
+  .urgencia {
+    width: 115%;
+    margin-left: -15px;
+    margin-right: -15px;
+    color: rgb(42, 42, 42);
+    font-size: 12px;
+    padding: 5px 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .urgente {
+    color: rgb(242, 1, 1);
+    background-color: white;
+    transition: all ease 0.3s;
+  }
+
+  .urgente:hover {
+    background-color: rgb(242, 1, 1);
+    color: white;
+  }
+  
+  .card-content h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  .card-content p {
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  
+  .chip {
+    font-weight: bold;
+  }
+  
+  .status {
+    font-size: 10px;
+    padding: 5px 10px;
+    border-radius: 8px 8px 0 0;
+    width: 115%;
+    font-weight: bold;
+    text-align: center;
+    margin-top: -15px;
+    margin-left: -15px;
+    margin-right: -15px;
+
+  }
+  
+  .cancelado {
+    background: rgb(201, 0, 0);
+    color: white;
+  }
+  
+  .aberto {
+    background: rgb(0, 128, 255);
+    color: white;
+  }
+  
+  .em-andamento {
+    
+    background: yellow;
+    color: black;
+  }
+  
+  
+  .finalizado {
+    background: rgb(9, 178, 0);
+    color: white;
+  }
+  
+  .card-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+  }
+  
+  .card-actions button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .card-actions button i {
+    color: #555;
+  }
+  
+  
+  .btn-check, .btn-andamento, .btn-cancel, .btn-edit, .btn-order {
+    width: 48px; /* Ajuste para garantir espaço suficiente */
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-check mat-icon,
+  .btn-andamento mat-icon,
+  .btn-cancel mat-icon,
+  .btn-edit mat-icon,
+  .btn-order mat-icon {
+    font-size: 24px; /* Mantém o tamanho do ícone adequado */
+  }
+
+  .btn-order {
+    background-color: #ffffff!important;
+    color: rgb(41, 41, 41);
+  }
+
+  .btn-order:hover {
+    color: #d89803;
+  }
+  
+
+  .btn-edit:hover {
+    background-color: #2d2d2d!important;
+    color: white;
+  }
+  
+  .btn-check:hover {
+    background-color: rgb(22, 150, 0)!important;
+    color: white;
+  }
+  
+  .btn-andamento:hover {
+    background-color: rgb(255, 238, 3)!important;
+    color: white;
+  }
+
+  .btn-cancel:hover {
+    background-color: rgb(229, 5, 5)!important;
+    color: white;
+  }
+
+  .disabled-button {
+    opacity: 0.5; /* Deixa o botão mais transparente */
+    cursor: not-allowed; /* Mostra que o botão está desabilitado */
+  }
+
+  .filter-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .filter-buttons button {
+    margin: 10px;
+    margin-right: -10px;
+    background-color: #ddd;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s ease all;
+  }
+  
+  .filter-buttons button:hover {
+    background-color: #bbb;
+  }
+
+  .btn-todos-filter.active {
+    background-color: #d89803!important;
+    color: white;
+  }
+
+  .btn-aberto-filter.active {
+    background-color: #242424!important;
+    color: white;
+  }
+
+  .btn-andamento-filter.active {
+    background-color: #f2ff00!important;
+    color: rgb(38, 38, 38);
+  }
+
+  .btn-finalizado-filter.active {
+    background-color: #28a000!important;
+    color: white;
+  }
+
+  .btn-cancelado-filter.active {
+    background-color: #d80303!important;
+    color: white;
+  }
+
+  .btn-todos-filter:hover {
+    background-color: #d89803!important;
+    color: white;
+  }
+
+  .btn-aberto-filter:hover {
+    background-color: #242424!important;
+    color: white;
+  }
+
+  .btn-andamento-filter:hover {
+    background-color: #f2ff00!important;
+    color: black;
+  }
+
+  .btn-finalizado-filter:hover {
+    background-color: #28a000!important;
+    color: white;
+  }
+
+  .btn-cancelado-filter:hover {
+    background-color: #d80303!important;
+    color: white;
+  }
+  
+   
+.modal-content-arquivos {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 50%;
+  min-height: 40%;
+  max-height: 80%; /* Alterado para height em vez de max-height */
+  overflow: auto; /* Alterado para auto */
+  margin: 0 auto;
+  background-color: #fefefe;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.modal-content-delete {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 50%;
+  height: 30%;
+  overflow: auto; /* Alterado para auto */
+  margin: 0 auto;
+  background-color: #fefefe;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.modal-header {
+  background-color: rgb(61, 61, 61); /* Cor de fundo da parte superior */
+  color: #fff; /* Cor do texto da parte superior */
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-top-left-radius: 10px;
+}
+
+.modal-header-delete {
+  background-color: #a10a0a; /* Cor de fundo da parte superior */
+  color: #fff; /* Cor do texto da parte superior */
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-top-left-radius: 10px;
+}
+
+
+.close {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 3;
+}
+
+.close:hover {
+  color: rgb(253, 60, 60);
+}
+
+/* Estilos do conteúdo do modal */
+.modal-body {
+  width: 100%;
+  padding: 20px;
+  display: flex; /* Alterado de block para flex */
+  justify-content: center;
+  align-items: center; /* Adicionado para centralizar verticalmente */
+  margin-bottom: -15px;
+}
+
+
+
+.modal-body-mobile {
+  display: block;
+}
+
+/* Estilos do título do modal */
+.modal-title {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  text-align: center; /* Centralizar o conteúdo do modal */
+}
