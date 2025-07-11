@@ -1,0 +1,84 @@
+<!-- Filtros -->
+<div class="filtros-vendas">
+<mat-form-field appearance="outline">
+  <mat-label>Intervalo de Datas</mat-label>
+  <mat-date-range-input [rangePicker]="rangePicker" [(ngModel)]="intervaloDatas">
+    <input matStartDate placeholder="Início">
+    <input matEndDate placeholder="Fim">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+  <mat-date-range-picker #rangePicker></mat-date-range-picker>
+</mat-form-field>
+  <mat-form-field>
+    <mat-label>Cliente</mat-label>
+    <input matInput [matAutocomplete]="autoCliente" [(ngModel)]="clienteBusca" (ngModelChange)="filtrarClientes($event)">
+    <mat-autocomplete #autoCliente="matAutocomplete" (optionSelected)="selecionarCliente($event)">
+      <mat-option *ngFor="let c of clientesFiltrados" [value]="c.nome">{{ c.nome }}</mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Forma de Pagamento</mat-label>
+    <mat-select [(ngModel)]="formaPagamentoSelecionada">
+      <mat-option value="">Todas</mat-option>
+      <mat-option *ngFor="let f of formasPagamento" [value]="f.nome">{{ f.nome }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="buscarVendas()">Buscar</button>
+</div>
+
+<!-- Tabela de vendas -->
+<table mat-table [dataSource]="saidas" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let saida">{{ saida.id }}</td>
+  </ng-container>
+  <ng-container matColumnDef="data_saida">
+    <th mat-header-cell *matHeaderCellDef>Data</th>
+    <td mat-cell *matCellDef="let saida">{{ saida.data_saida | date:'short' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="cliente">
+    <th mat-header-cell *matHeaderCellDef>Cliente</th>
+    <td mat-cell *matCellDef="let saida">{{ saida.cliente_nome }}</td>
+  </ng-container>
+  <ng-container matColumnDef="valor_total">
+    <th mat-header-cell *matHeaderCellDef>Valor Total</th>
+    <td mat-cell *matCellDef="let saida">R$ {{ saida.valor_total | number:'1.2-2' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="forma_pagamento">
+    <th mat-header-cell *matHeaderCellDef>Pagamento</th>
+    <td mat-cell *matCellDef="let saida">{{ saida.forma_pagamento }}</td>
+  </ng-container>
+  <ng-container matColumnDef="acoes">
+    <th mat-header-cell *matHeaderCellDef>Ações</th>
+    <td mat-cell *matCellDef="let saida">
+      <button mat-icon-button color="primary" (click)="abrirModalProdutos(saida)">
+        <mat-icon>list</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="colunasTabela"></tr>
+  <tr mat-row *matRowDef="let row; columns: colunasTabela;"></tr>
+</table>
+
+<!-- Modal de produtos da saída -->
+<ng-template #modalProdutos>
+  <h2 mat-dialog-title>Produtos da Venda #{{ saidaSelecionada?.id }}</h2>
+  <mat-dialog-content>
+    <table>
+      <tr>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th>Valor</th>
+      </tr>
+      <tr *ngFor="let item of produtosDaSaida">
+        <td>{{ item.produto_nome }}</td>
+        <td>{{ item.quantidade }}</td>
+        <td>R$ {{ item.valor_venda | number:'1.2-2' }}</td>
+      </tr>
+    </table>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Fechar</button>
+  </mat-dialog-actions>
+</ng-template>
