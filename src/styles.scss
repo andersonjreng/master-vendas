@@ -1,0 +1,159 @@
+
+
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+/* You can add global styles to this file, and also import other style files */
+:host {
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+* {
+  font-size: 95%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Jost', sans-serif;
+}
+
+body {
+  // font-family: var(--tp-ff-body);
+  font-size: 14px;
+  font-weight: 400;
+  // color: var(--tp-text-body);
+  line-height: 26px;
+}
+
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+/* SPACER */
+.spacer {
+  flex: 1 1 auto;
+}
+
+.styleSnackBarToast_success {
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: white;
+  --mdc-snackbar-container-color: #3f8d41 !important;
+}
+.styleSnackBarToast_alert {
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: white;
+  --mdc-snackbar-container-color: #0557e8 !important;
+}
+.styleSnackBarToast_error {
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: white;
+  --mdc-snackbar-container-color: #F44336 !important;
+}
+
+a, button {
+  color: inherit;
+  outline: none;
+  border: none;
+  background: transparent;
+}
+
+a {
+  text-decoration: none;
+}
+
+img, svg {
+  vertical-align: middle;
+}
+
+html, body { height: 100% }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+// html, body { height: 100% }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Estilos personalizados para o Toastr */
+.toast {
+  /* Defina o tamanho da fonte para o corpo do Toastr */
+  border-radius: 10px;
+}
+
+.toast-title {
+  /* Defina o tamanho da fonte para o título do Toastr */
+  font-size: 16px; /* Por exemplo, ajuste para o tamanho desejado */
+}
+
+.toast-message {
+  font-size: 14px;
+}
+
+/* Estilo da barra de rolagem */
+::-webkit-scrollbar {
+  width: 8px; /* largura da barra de rolagem */
+  height: 8px;
+}
+
+/* Estilo do indicador de rolagem */
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* cor de fundo do indicador */
+  border-radius: 6px; /* borda arredondada do indicador */
+}
+
+/* Estilo quando houver hover sobre o indicador */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* cor de fundo do indicador quando hover */
+}
+
+
+
+
+.mat-mdc-tab-group, .mat-mdc-tab-nav-bar{
+  --mat-tab-header-active-focus-label-text-color: #d89803;
+  --mat-tab-header-active-label-text-color : #d89803;
+  --mat-tab-header-inactive-label-text-color: rgb(0 0 0 / 60%);
+  --mat-tab-header-inactive-focus-label-text-color: rgba(37, 37, 37, 0.6);
+  --mat-tab-header-inactive-hover-label-text-color : rgba(37, 37, 37, 0.6);
+  --mdc-tab-indicator-active-indicator-color: #d89803;
+  --mat-tab-header-active-hover-label-text-color: #d89803; // Fix here
+  --mat-tab-header-active-ripple-color: #d89803;
+  --mat-tab-header-inactive-ripple-color: #232222;
+}
+
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {border-color: #40ff00 !important;}

@@ -1,0 +1,50 @@
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 118px;
+  @apply bg-primary;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+
+.itemSide {
+  color: #c1c1c1;
+  font-weight: 500;
+  font-size: 14px;
+}
+.activeLink {
+  color: white;
+  border-left: white 3px solid;
+}
+.listItemContent {
+  display: flex !important;
+  align-items: center;
+  flex-direction: row !important;
+  gap: 10px !important;
+}
+
+.disabledLink {
+  opacity: 0.5; /* Torna o item semitransparente */
+  pointer-events: none; /* Desabilita ações do mouse (cliques, etc.) */
+  cursor: default; /* Cursor padrão para mostrar que não é clicável */
+}
+
+.inactiveIcon {
+  color: #e0e0e0 !important; /* Ícone desativado */
+}
+
+.inactiveText {
+  color: #e0e0e0 !important; /* Texto desativado */
+}

@@ -1,0 +1,28 @@
+<div
+  class="bg-[#007bff] text-white text-xl p-3 sticky flex justify-between items-center"
+>
+  <span class="text-xl p-2"></span>
+  <span class="modal-title">Alerta</span>
+  <span
+    class="rounded-md pl-2 pr-2 hover:bg-black/10 cursor-pointer"
+    (click)="onNoClick()"
+    >&times;</span
+  >
+</div>
+<mat-dialog-content class="text-xl m-5 justify-center flex">{{
+  data.message
+}}</mat-dialog-content>
+<mat-dialog-actions align="center" class="m-5">
+  <button
+    class="ml-3 bg-[#007bff] hover:bg-[#0053ac] transition-colors px-5 py-2 rounded-md text-base text-white"
+    (click)="onNoClick()"
+  >
+    Não
+  </button>
+  <button
+    class="ml-3 bg-[#c70021] hover:bg-[#880017] transition-colors px-5 py-2 rounded-md text-base text-white"
+    (click)="onYesClick()"
+  >
+    Sim
+  </button>
+</mat-dialog-actions>

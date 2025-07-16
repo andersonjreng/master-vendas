@@ -1,0 +1,90 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+    style="height: 100vh; background-color: #2C363B;"
+  >
+  <!-- HEADER SIDEBAR -->
+
+      <div class="bg-primary flex flex-col p-4 text-sm text-white font-semibold"
+
+      style="background-color: #2C363B; width: 10vh; margin-bottom: -20px; margin-top: -40px;">
+  
+        <img src="assets/master-logo-barra-vertical.png" alt="concrelagos" style="width: 20vh; align-self: center; cursor: pointer;" (click)="goToHome()">
+  
+      </div>
+    <mat-nav-list>
+      <ng-container *ngFor="let page of validateRuleForShowModule(pages)">
+        <ng-container *ngIf="page.subPage; else singleItem">
+          <mat-expansion-panel style="background-color: #2C363B;" [class]="page.active ? 'itemSide' : 'itemSide disabledLink'">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="listItemContent">
+                  <mat-icon [style]="isActive(page.link) ? 'color:white;' : 'color: #c1c1c1;'" [class.inactiveIcon]="!page.active" [matTooltip]="page.nameInfo">
+                    {{ page?.icon }}
+                  </mat-icon>
+                  <span [style]="isActive(page.link) ? 'color:white;' : 'color: #c1c1c1;'" [class.inactiveText]="!page.active" style="font-size: 13px;">
+                    {{ page?.name }}
+                  </span>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a *ngFor="let subItem of page.subPage" mat-list-item [routerLink]="subItem.active ? subItem.link : null" [class]="subItem.active ? (isActive(subItem.link) ? 'itemSide activeLink' : 'itemSide') : 'itemSide disabledLink'">
+              <div class="listItemContent">
+                <mat-icon [style]="isActive(subItem.link) ? 'color:white;' : 'color: #c1c1c1;'" [class.inactiveIcon]="!subItem.active" [matTooltip]="subItem.nameInfo">
+                  {{ subItem?.icon }}
+                </mat-icon>
+                <span [style]="isActive(subItem.link) ? 'color:white;' : 'color: #c1c1c1;'" [class.inactiveText]="!subItem.active" style="font-size: 13px;">
+                  {{ subItem?.name }}
+                </span>
+              </div>
+            </a>
+          </mat-expansion-panel>
+        </ng-container>
+        <ng-template #singleItem>
+          <a mat-list-item [routerLink]="page.active ? page.link : null" [class]="page.active ? (isActive(page.link) ? 'itemSide activeLink' : 'itemSide') : 'itemSide disabledLink'">
+            <div class="listItemContent">
+              <mat-icon [style]="isActive(page.link) ? 'color:white;' : 'color: #c1c1c1;'" [class.inactiveIcon]="!page.active" [matTooltip]="page.nameInfo">
+                {{ page?.icon }}
+              </mat-icon>
+              <span [style]="isActive(page.link) ? 'color:white;' : 'color: #c1c1c1;'" [class.inactiveText]="!page.active" style="font-size: 13px;">
+                {{ page?.name }}
+              </span>
+            </div>
+          </a>
+        </ng-template>
+      </ng-container>
+    </mat-nav-list>
+    </mat-sidenav>
+  <!-- CONTENTE -->
+  <mat-sidenav-content>
+    <mat-toolbar
+    [style.border]="'1px solid #c1c1c138'"
+    class="flex items-center"
+    >
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="(isHandset$ | async) || isMobile"
+
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <div class="spacer" *ngIf="(isHandset$ | async) || isMobile"></div>
+      <!-- <div>StockMasterDash</div> -->
+      <img src="assets/master.logo.png" alt="logo" style="width: 20vh; cursor: pointer;" (click)="goToHome()">
+      <div class="spacer"></div>
+      <app-user-menu-appbar></app-user-menu-appbar>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+

@@ -1,0 +1,188 @@
+.userMenuContainer {
+  display: flex;
+}
+
+.userContainer {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  margin: 0;
+  line-height: 1.8;
+}
+
+.userContainer:hover {
+  background-color: rgb(0,0,0,0.05);
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+
+
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-left: 15px;
+}
+
+.userInfo > .title {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0 !important;
+}
+
+.userInfo {
+  color: #8A8C8E;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.title {
+  font-size: 14px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  font-weight: 600;
+}
+
+.icon-btn {
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px;
+  font-size: 14px;
+  width: 100%;
+  padding-left: 10px;
+}
+
+.imgAvatar {
+  object-fit: contain;
+  border-radius: 50%;
+  margin: 6px;
+  width: 40px;
+  height: 40px;
+  @apply bg-primary;
+}
+
+.modal-content-mobile {
+  max-width: 80%!important;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  text-align: center; /* Centralizar o conteúdo do modal */
+}
+
+.modal-content {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 50%; /* Defina a largura máxima do conteúdo do modal */
+  max-height: 80%;
+  margin: 0 auto; /* Centralize o modal horizontalmente */
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Permitir a rolagem se o conteúdo exceder a altura do modal */
+  border-radius: 10px;
+}
+
+/* Estilos da parte superior */
+.modal-header {
+  background-color: rgb(61, 61, 61); /* Cor de fundo da parte superior */
+  color: #fff; /* Cor do texto da parte superior */
+  padding: 10px;
+  position: relative; /* Para posicionar o botão de fechar */
+  margin-top: -20px;
+  margin-left: -20px;
+  margin-right: -20px;
+}
+.close {
+  color: #fff; /* Cor do botão de fechar */
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close:hover {
+  color: rgb(253, 60, 60);
+}
+
+/* Estilos do conteúdo do modal */
+.modal-body {
+  padding: 20px;
+  display: block;
+  justify-content: center;
+}
+
+.modal-body-mobile {
+  display: block;
+}
+
+/* Estilos do título do modal */
+.modal-title {
+  margin-top: 0;
+  font-size: 15px;
+}
+
+.btn-conferir,
+.btn-cancelar {
+
+  padding: 10px 20px;
+  color: white;
+  border-radius: 5px;
+  font-size: 15px;
+  transition: background-color 0.3s;
+}
+
+.btn-cancelar {
+  background-color: #b80b1a;
+  margin-right: 10px;
+}
+
+.btn-cancelar:hover {
+  background-color: #830812;
+}
+
+.btn-conferir {
+  background-color: #0aa12d;
+}
+
+.btn-conferir:hover {
+  background-color: #078324;
+}
+
+mat-form-field {
+  width: 80%;
+}
+
+input[type="password"] {
+  font-size: 18px; /* Ajuste o tamanho do texto conforme necessário */
+  font-weight: bold;
+}
+
+input[type="password"]::placeholder {
+  font-size: 16px;
+
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

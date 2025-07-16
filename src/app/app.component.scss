@@ -1,0 +1,83 @@
+.example-container {
+  height: 100vh;
+}
+
+.example-drawer {
+  width: 200px;
+}
+
+.main-content {
+  padding: 20px;
+}
+
+
+::ng-deep .mdc-notched-outline__notch {
+  border-right: none !important;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  text-align: center; /* Centralizar o conteúdo do modal */
+}
+
+.modal-content {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 50%;
+  height: auto; /* Alterado para height: auto */
+  max-height: 80%;
+  overflow: auto; /* Ou remova isso se não for necessário */
+  margin: 0 auto;
+  background-color: #fefefe;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.modal-content-mobile {
+  max-width: 80%;
+}
+
+
+/* Estilos da parte superior */
+.modal-header {
+  background-color: #007bff; /* Cor de fundo da parte superior */
+  color: #fff; /* Cor do texto da parte superior */
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-top-left-radius: 10px;
+
+}
+
+/* Estilos do conteúdo do modal */
+.modal-body {
+  width: 100%;
+  height: 100%; /* Alterado para height: 100% */
+  padding: 20px;
+}
+
+.btn-confirm {
+  background-color: #007bff;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  margin: 20px;
+  margin-top: -50px;
+}
+
+.btn-confirm:hover {
+  background-color: #004da0;
+}
+
