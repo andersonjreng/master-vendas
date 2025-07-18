@@ -73,7 +73,7 @@ import { RhRegisterComponent } from './modules/rh/rh-register/rh-register.compon
 import pt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { LOCALE_ID } from '@angular/core';
-import { UsuariosComponent } from './modules/anydesk/usuarios.component';
+import { UsuariosComponent } from './modules/usuarios/usuarios.component';
 import { PdvComponent } from './modules/pdv/pdv.component';
 import localePt from '@angular/common/locales/pt';
 import { VendasComponent } from './modules/vendas/vendas.component';

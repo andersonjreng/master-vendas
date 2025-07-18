@@ -18,7 +18,7 @@ import { TutorialComponent } from './modules/cursos/tutorial/tutorial.component'
 import { CursosComponent } from './modules/cursos/cursos/cursos.component';
 import { RhComponent } from './modules/rh/rh_dash/rh.component';
 import { RhRegisterComponent } from './modules/rh/rh-register/rh-register.component';
-import { UsuariosComponent } from './modules/anydesk/usuarios.component';
+import { UsuariosComponent } from './modules/usuarios/usuarios.component';
 import { PdvComponent } from './modules/pdv/pdv.component';
 import { VendasComponent } from './modules/vendas/vendas.component';
 

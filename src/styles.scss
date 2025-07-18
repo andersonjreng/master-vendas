@@ -44,6 +44,15 @@ body {
   margin-left: auto;
 }
 
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background: #009688 !important;
+  background-color: #009688 !important;
+}
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background: #009688 !important;
+  background-color: #009688 !important;
+}
+
 @import "~@fortawesome/fontawesome-free/css/all.css";
 
 

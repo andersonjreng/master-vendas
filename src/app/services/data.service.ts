@@ -281,6 +281,10 @@ export class DataService {
     return this.http.get<any>(`${this.apiUrl}/getClientes.php`);
   }
 
+  getClientesAtivos(): Observable<any[]> {
+    return this.http.get<any>(`${this.apiUrl}/getClientesAtivos.php`);
+  }
+
   getUsuarios(): Observable<any[]> {
     return this.http.get<any>(`${this.apiUrl}/getUsuarios.php`);
   }
@@ -311,6 +315,26 @@ export class DataService {
 
   deleteProduto(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/deleteProduto.php/${id}`);
+  }
+
+  postClientes(cliente: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/postClientes.php`, cliente);
+  }
+
+  getEmpresas(): Observable<any[]> {
+    return this.http.get<any>(`${this.apiUrl}/getEmpresas.php`);
+  }
+
+  postUsuarios(usuario: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/postUsuarios.php`, usuario);
+  }
+
+  putCliente(cliente: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/putCliente.php`, cliente);
+  }
+
+  putUsuario(usuario: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/putUsuario.php`, usuario);
   }
 
  
