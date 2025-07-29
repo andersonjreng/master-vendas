@@ -7,6 +7,7 @@ import { onSideNavChange, animateText, animateContenListItem, animateLogo } from
 import { MobileCheckService } from '../services/mobile-check.service';
 import { LoginService } from '../services/login.service';
 import { ApiService } from '../services/api.service';
+import { DataService } from '../services/data.service';
 
 interface Page {
   link: string;
@@ -37,6 +38,8 @@ export class NavigationComponent {
   private router = inject(Router);
   userName: string = '';
   permissionUser: string = '';
+  logoPath: string = 'assets/master.logo.png';
+
 
   public pages: Page[] = []
 
@@ -46,30 +49,33 @@ export class NavigationComponent {
       shareReplay()
     );
 
-    ngOnInit() {
-      // Obtenha o item armazenado no sessionStorage
-      const currentUser = sessionStorage.getItem('currentUser');
-    
-      if (currentUser) {
-        // Analise a string JSON para um objeto
-        const userObject = JSON.parse(currentUser);
-    
-        // Acesse a propriedade "permission"
-        const userPermission = userObject.permission;
-        console.log(userPermission); // Deve exibir "admin"
-    
-        // Passe a permissão para a função claimsUser
-        this.claimsUser(userPermission);
-      } else {
-        console.log('Usuário não encontrado no sessionStorage');
-        this.claimsUser(null); // Ou algum valor padrão
+ngOnInit() {
+  const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+  const empresaId = currentUser.empresa_id;
+
+  if (empresaId) {
+    this.dataService.getEmpresaId(empresaId).subscribe(empresas => {
+      if (empresas && empresas.length > 0 && empresas[0].logo_img) {
+        this.logoPath = `assets/${empresas[0].logo_img}.png`;
       }
-    }
+    });
+  }
+
+  if (currentUser) {
+    // Use o objeto já parseado
+    const userPermission = currentUser.permission;
+    console.log(userPermission); // Deve exibir "admin"
+    this.claimsUser(userPermission);
+  } else {
+    console.log('Usuário não encontrado no sessionStorage');
+    this.claimsUser(null);
+  }
+}
     
 
 
   constructor(
-
+    private dataService: DataService,
   ) {
 
   }
@@ -82,7 +88,6 @@ export class NavigationComponent {
     const subPages = [
       { name: '', nameInfo: 'Produtos', link: '/app/produtos', icon: 'local_grocery_store', active: true },
       { name: '', nameInfo: 'Clientes', link: '/app/clientes', icon: 'person', active: true },
-      { name: '', nameInfo: 'Usuários', link: '/app/usuarios', icon: 'persons', active: true },
       { name: '', nameInfo: 'Vendas', link: '/app/vendas', icon: 'attach_money', active: true },
     ];
   
@@ -107,16 +112,17 @@ export class NavigationComponent {
           active: true,
           subPage: subPages,
         },
+        { name: '', nameInfo: 'Usuários', link: '/app/usuarios', icon: 'persons', active: true },
       ],
-      'atendente': [ // Home e Atendimentos suporte
+      'supervisor': [ // Home e Atendimentos suporte
       {
-        name: '',
-        nameInfo: 'Suporte',
-        icon: 'support_agent',
-        link: '',
-        active: true,
-        subPage: subPages,
-      },
+          name: '',
+          nameInfo: 'Cadastros',
+          icon: 'view_list',
+          link: '',
+          active: true,
+          subPage: subPages,
+        },
       ]
     };
   

@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:4200/api'
+  // apiUrl: 'https://andersonjrdev.com.br/api/'
+  apiUrl: 'http://localhost/master-api',
 };

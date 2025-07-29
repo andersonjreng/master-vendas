@@ -77,6 +77,9 @@ import { UsuariosComponent } from './modules/usuarios/usuarios.component';
 import { PdvComponent } from './modules/pdv/pdv.component';
 import localePt from '@angular/common/locales/pt';
 import { VendasComponent } from './modules/vendas/vendas.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
+
 
 registerLocaleData(localePt);
 
@@ -161,8 +164,8 @@ export function playerFactory() {
     ClipboardModule,
     MatButtonModule,
     MatTooltipModule,
-    MatNativeDateModule
-    
+    MatNativeDateModule,
+    MatButtonToggleModule,
     
     
 

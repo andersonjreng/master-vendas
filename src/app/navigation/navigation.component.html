@@ -78,7 +78,7 @@
       </button>
       <div class="spacer" *ngIf="(isHandset$ | async) || isMobile"></div>
       <!-- <div>StockMasterDash</div> -->
-      <img src="assets/master.logo.png" alt="logo" style="width: 20vh; cursor: pointer;" (click)="goToHome()">
+      <img [src]="logoPath" alt="logo" style="width: 20vh; cursor: pointer;" (click)="goToHome()">
       <div class="spacer"></div>
       <app-user-menu-appbar></app-user-menu-appbar>
     </mat-toolbar>

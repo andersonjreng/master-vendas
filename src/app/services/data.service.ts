@@ -9,8 +9,8 @@ import { environment } from '@/src/environments/environment.production';
   providedIn: 'root'
 })
 export class DataService {
+  // private apiUrl = 'https://andersonjrdev.com.br/api/';
   private apiUrl = 'http://localhost/master-api';
-  
 
 
   constructor(private http: HttpClient) { }
@@ -324,6 +324,10 @@ export class DataService {
   getEmpresas(): Observable<any[]> {
     return this.http.get<any>(`${this.apiUrl}/getEmpresas.php`);
   }
+
+  getEmpresaId(id: any): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/getEmpresas.php?id=${id}`);
+  } 
 
   postUsuarios(usuario: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/postUsuarios.php`, usuario);
