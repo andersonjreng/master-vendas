@@ -49,6 +49,7 @@
   <mat-header-cell *matHeaderCellDef> Ativo </mat-header-cell>
   <mat-cell *matCellDef="let element">
  
+    <mat-slide-toggle
       [checked]="element.ativo == 1"
       color="primary"
       (change)="alterarStatusCliente(element)">
@@ -72,7 +73,6 @@
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
 </mat-table>
 
 <div class="paginator-container" *ngIf="dadosCarregados">
