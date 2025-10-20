@@ -48,7 +48,7 @@
   <ng-container matColumnDef="ativo">
   <mat-header-cell *matHeaderCellDef> Ativo </mat-header-cell>
   <mat-cell *matCellDef="let element">
-    <mat-slide-toggle
+ 
       [checked]="element.ativo == 1"
       color="primary"
       (change)="alterarStatusCliente(element)">
