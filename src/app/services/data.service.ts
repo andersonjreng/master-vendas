@@ -278,11 +278,11 @@ export class DataService {
   }
 
   getClientes(): Observable<any[]> {
-    return this.http.get<any>(`${this.apiUrl}/getClientes.php`);
+    return this.http.get<any[]>(`${this.apiUrl}/getClientes.php`);
   }
 
   getClientesAtivos(): Observable<any[]> {
-    return this.http.get<any>(`${this.apiUrl}/getClientesAtivos.php`);
+    return this.http.get<any[]>(`${this.apiUrl}/getClientesAtivos.php`);
   }
 
   getUsuarios(): Observable<any[]> {
