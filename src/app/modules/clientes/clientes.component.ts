@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 // Removed MatPaginator import
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -52,6 +52,7 @@ export class ClientesComponent implements OnInit, AfterViewInit, OnDestroy {
   private fb: FormBuilder,
   private dataService: DataService,
   private toastr: ToastrService,
+  private cdr: ChangeDetectorRef,
 
   ) {
     this.formCliente = this.fb.group({
@@ -103,8 +104,22 @@ export class ClientesComponent implements OnInit, AfterViewInit, OnDestroy {
           this.nomesClientes = response.map((c: any) => c.nome);
             // update paginator length and ensure paginator is attached
             this.length = this.dataSource.data.length;
+            // paginator may be inside an *ngIf and not present yet. Force change
+            // detection and attach it. If still unavailable, use a microtask
+            // fallback (setTimeout 0) which runs after the view update.
+            try {
+              this.cdr.detectChanges();
+            } catch (e) {
+              // ignore; some environments may not allow explicit detection here
+            }
             if (this.paginator) {
               this.dataSource.paginator = this.paginator;
+            } else {
+              setTimeout(() => {
+                if (this.paginator) {
+                  this.dataSource.paginator = this.paginator;
+                }
+              }, 0);
             }
           // paginator is assigned in ngAfterViewInit to avoid referencing the view
           this.dadosCarregados = true;
