@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 // Removed MatPaginator import
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, startWith, map, of } from 'rxjs';
+import { Observable, startWith, map, of, Subscription } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
 import { DataService } from '../../services/data.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,7 +14,7 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.scss']
 })
-export class ClientesComponent implements OnInit, AfterViewInit {
+export class ClientesComponent implements OnInit, AfterViewInit, OnDestroy {
   // Removed ngAfterViewChecked method
 
   loading: boolean = false;
@@ -35,6 +36,14 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   filtroNome = new FormControl('');
   nomesFiltrados: Observable<string[]> = of([]);
   nomesClientes: string[] = [];
+
+  private subs: Subscription[] = [];
+
+  // Paginator state
+  length: number = 0;
+  pageSize: number = 10;
+  pageSizeOptions: number[] = [5, 10, 20, 50];
+  pageIndex: number = 0;
 
   // Removed paginator property
 
@@ -59,18 +68,27 @@ export class ClientesComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getClientes();
+
+    // Filter predicate should be set early so the table filtering works predictably
+    this.dataSource.filterPredicate = (data: any, filter: string) =>
+      (data.nome || '').toLowerCase().includes(filter);
+
     this.nomesFiltrados = this.filtroNome.valueChanges.pipe(
       startWith(''),
       map(value => this._filterNomes(value || ''))
     );
 
-    this.filtroNome.valueChanges.subscribe(valor => {
+    const sub = this.filtroNome.valueChanges.subscribe(valor => {
       this.dataSource.filter = valor?.trim().toLowerCase() || '';
     });
+    this.subs.push(sub);
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    // assign paginator when view is initialized; if data already arrived, make sure to attach
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
   }
 
   // Removed ngAfterViewInit method
@@ -79,13 +97,16 @@ export class ClientesComponent implements OnInit, AfterViewInit {
     this.loading = true;
     const obs = this.dataService.getClientes();
     if (obs && typeof obs.subscribe === 'function') {
-      obs.subscribe(
+      const sub = obs.subscribe(
         (response) => {
           this.dataSource.data = response;
           this.nomesClientes = response.map((c: any) => c.nome);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.filterPredicate = (data: any, filter: string) =>
-            data.nome.toLowerCase().includes(filter);
+            // update paginator length and ensure paginator is attached
+            this.length = this.dataSource.data.length;
+            if (this.paginator) {
+              this.dataSource.paginator = this.paginator;
+            }
+          // paginator is assigned in ngAfterViewInit to avoid referencing the view
           this.dadosCarregados = true;
           this.loading = false;
         },
@@ -94,10 +115,23 @@ export class ClientesComponent implements OnInit, AfterViewInit {
           this.toastr.error('Erro ao obter clientes.', 'Erro');
         }
       );
+      this.subs.push(sub);
     } else {
       this.loading = false;
       this.toastr.error('Não foi possível carregar os clientes. Verifique sua autenticação ou conexão.','Erro');
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(s => s.unsubscribe());
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    // dataSource.paginator already wired; updating pageSize/pageIndex is enough
+    // ensure length stays in sync
+    this.length = this.dataSource.data.length;
   }
 
   private _filterNomes(value: string): string[] {
