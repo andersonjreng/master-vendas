@@ -1,0 +1,306 @@
+form {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    
+  }
+  
+  form div {
+    margin-bottom: 20px;
+  }
+  
+  mat-form-field {
+    margin-top: 20px;
+    flex: 1;
+    width: 100%;
+  }
+  
+
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #d89803;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #c48900;
+  }
+  
+  mat-tab-group {
+    margin-top: 20px;
+    margin: 30px;
+  }
+  
+  @media (max-width: 600px) {
+    form {
+      max-width: 100%;
+    }
+  }
+  
+  /* atendimentos.component.css */
+
+mat-table {
+    width: 100%;
+  }
+  
+/* Estilizando os cabeçalhos das colunas */
+mat-header-cell {
+  font-weight: bold;
+  color: rgb(61, 61, 61);
+}
+
+/* Estilizando as linhas alternadas */
+mat-row:nth-child(even) {
+  background-color: #f7f7f7; /* Cinza bem clarinho */
+}
+
+mat-row:nth-child(odd) {
+  background-color: #ffffff; /* Branco */
+}
+
+/* Ajustando o padding das células */
+mat-header-cell, mat-cell {
+  padding: 8px;
+}
+
+  .filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+
+  
+  .filter-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+ 
+  
+  mat-table {
+    width: 100%;
+  }
+  
+  mat-header-cell, mat-cell {
+    padding: 8px;
+  }
+
+  .btn-limpar, .btn-excel {
+    width: 48px; /* Ajuste para garantir espaço suficiente */
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-limpar mat-icon,
+  .btn-excel mat-icon {
+    font-size: 24px; /* Mantém o tamanho do ícone adequado */
+  }
+  
+  .btn-limpar:hover {
+    background-color: rgb(61, 61, 61);
+    color: white;
+  }
+  
+  .btn-excel:hover {
+    background-color: rgb(0, 146, 22);
+    color: white;
+  }
+
+  .disabled-button {
+    opacity: 0.5; /* Deixa o botão mais transparente */
+    cursor: not-allowed; /* Mostra que o botão está desabilitado */
+  }
+  
+  
+.modal-content-arquivos {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 50%;
+  min-height: 40%;
+  max-height: 80%; /* Alterado para height em vez de max-height */
+  overflow: auto; /* Alterado para auto */
+  margin: 0 auto;
+  background-color: #fefefe;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.modal-content-delete {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 50%;
+  height: 30%;
+  overflow: auto; /* Alterado para auto */
+  margin: 0 auto;
+  background-color: #fefefe;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.modal-header {
+  background-color: rgb(61, 61, 61); /* Cor de fundo da parte superior */
+  color: #fff; /* Cor do texto da parte superior */
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-top-left-radius: 10px;
+}
+
+.modal-header-delete {
+  background-color: #a10a0a; /* Cor de fundo da parte superior */
+  color: #fff; /* Cor do texto da parte superior */
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-top-left-radius: 10px;
+}
+
+
+.close {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 3;
+}
+
+.close:hover {
+  color: rgb(253, 60, 60);
+}
+
+/* Estilos do conteúdo do modal */
+.modal-body {
+  width: 100%;
+  padding: 20px;
+  display: flex; /* Alterado de block para flex */
+  justify-content: center;
+  align-items: center; /* Adicionado para centralizar verticalmente */
+  margin-bottom: -15px;
+}
+
+
+
+
+
+.modal-body-mobile {
+  display: block;
+}
+
+/* Estilos do título do modal */
+.modal-title {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  text-align: center; /* Centralizar o conteúdo do modal */
+}
+
+.btn-confirm {
+  background-color: #0aa12d;
+  border-radius: 10px;
+  padding: 15px 35px;
+  color: white;
+  margin: 10px;
+  font-size: 20px;
+}
+
+.btn-cancel {
+  background-color: #a10a0a;
+  border-radius: 10px;
+  padding: 15px 35px;
+  color: white;
+  margin: 10px;
+  font-size: 20px;
+}
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.error-container img {
+  opacity: 0.15; /* Define a opacidade da imagem */
+}
+
+.botao-alerta {
+  background-color: yellow;
+  color: red;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Deixa o botão circular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
+
+.botao-alerta:hover {
+  background-color: gold; /* Muda de amarelo para dourado no hover */
+}
+
+.btn-soma {
+  background-color: rgb(4, 170, 4); 
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+  font-size: 16px; 
+  cursor: pointer; 
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.btn-soma:hover {
+  background-color: #00741b;
+}
+
+.btn-historico {
+  background-color: rgb(0, 105, 203); 
+  color: white; 
+  border: none; 
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 12px; 
+  cursor: pointer; 
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.btn-historico:hover {
+  background-color: #003c74;
+}

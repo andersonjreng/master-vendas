@@ -1,0 +1,100 @@
+.dashboard-cards {
+  max-width: 900px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center; // Centraliza os cards
+}
+
+.filtro-periodo-item {
+  font-size: 18px!important;
+}
+
+.filtro-periodo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.mat-button-toggle-group {
+  min-width: 340px;
+  display: flex;
+  justify-content: center;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.mat-button-toggle {
+  flex: 1 1 0;
+  min-width: 110px;
+  font-weight: 500;
+  font-size: 1.1em;
+  padding: 12px 0;
+}
+
+.card-gerencial {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  align-items: stretch; // Garante que os filhos tenham a mesma altura
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 0; // Remove padding lateral para não afetar a área colorida
+  min-height: 110px;
+  margin-bottom: 0;
+  overflow: hidden; // Garante que a área colorida não ultrapasse
+  transition: all 0.3s ease;
+}
+
+.card-gerencial:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+
+.card-titulo-menor {
+  font-size: 2.1em;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.card-titulo-maior {
+  font-size: 3.1em;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.card-textos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 32px;
+}
+
+.card-emoji-area {
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  align-self: stretch; // Faz a área colorida ocupar toda a altura do card
+  height: auto;        // Garante que a altura acompanhe o card
+}
+
+.card-emoji-icon {
+  font-size: 3.2em;
+  color: #fff;
+}
+
+.mat-button-toggle-checked {
+  background: #43a047 !important; // verde
+  color: #fff !important;         // letra branca
+  border-radius: 8px;
+}

@@ -1,0 +1,125 @@
+<div style="display: flex; justify-content: center; margin: 20px;">
+  <mat-form-field appearance="outline" style="width: 350px;">
+    <mat-label>Pesquisar cliente</mat-label>
+    <input type="text"
+           matInput
+           [formControl]="filtroNome"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+      <mat-option *ngFor="let option of nomesFiltrados | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+
+<div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px; margin-bottom: 10px;">
+  <button mat-icon-button class="btn-limpar" matTooltip="Limpar filtro">
+    <mat-icon fontSet="material-icons">backspace</mat-icon>
+  </button>
+  <button mat-icon-button class="btn-excel" matTooltip="Exportar para Excel">
+    <mat-icon fontSet="material-icons">import_export</mat-icon>
+  </button>
+  <button mat-icon-button class="btn-adicionar" matTooltip="Adicionar Cliente" (click)="addCliente()">
+    <mat-icon fontSet="material-icons">add</mat-icon>
+  </button>
+</div>
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+<mat-table [dataSource]="dataSource">
+  <!-- Nome -->
+  <ng-container matColumnDef="nome">
+    <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.nome }} </mat-cell>
+  </ng-container>
+
+  <!-- Email -->
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.email }} </mat-cell>
+  </ng-container>
+
+  <!-- Telefone -->
+  <ng-container matColumnDef="telefone">
+    <mat-header-cell *matHeaderCellDef> Telefone </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.telefone }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="ativo">
+  <mat-header-cell *matHeaderCellDef> Ativo </mat-header-cell>
+  <mat-cell *matCellDef="let element">
+    <mat-slide-toggle
+      [checked]="element.ativo == 1"
+      color="primary"
+      (change)="alterarStatusCliente(element)">
+      {{ element.ativo == 1 ? 'Ativo' : 'Inativo' }}
+    </mat-slide-toggle>
+  </mat-cell>
+</ng-container>
+
+  <!-- Ações -->
+  <ng-container matColumnDef="acoes">
+    <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary" (click)="abrirModalEdicao(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="abrirModalExclusao(element)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<mat-paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[5,10,20,50]"
+    showFirstLastButtons>
+  </mat-paginator><!-- Modal de cadastro de cliente -->
+<ng-template #modalCadastroCliente>
+  <h2 mat-dialog-title>Novo Cliente</h2>
+  <mat-dialog-content [formGroup]="formCliente">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Telefone</mat-label>
+      <input matInput formControlName="telefone" required>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="primary" (click)="salvarCliente()" [disabled]="formCliente.invalid">Salvar</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<!-- Modal de edição de cliente -->
+<ng-template #modalEdicaoCliente>
+  <h2 mat-dialog-title>Editar Cliente</h2>
+  <mat-dialog-content [formGroup]="formClienteEdicao">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Telefone</mat-label>
+      <input matInput formControlName="telefone">
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="primary" (click)="salvarEdicaoCliente()" [disabled]="formClienteEdicao.invalid">Salvar</button>
+  </mat-dialog-actions>
+</ng-template>

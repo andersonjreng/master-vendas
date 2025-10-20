@@ -1,0 +1,21 @@
+<div class="dashboard-cards">
+
+
+  <div class="filtro-periodo">
+    <mat-button-toggle-group [(ngModel)]="periodoSelecionado" (change)="buscarResumo()">
+      <mat-button-toggle class="filtro-periodo-item" value="hoje">Hoje</mat-button-toggle>
+      <mat-button-toggle class="filtro-periodo-item" value="semana">Semana</mat-button-toggle>
+      <mat-button-toggle class="filtro-periodo-item" value="mes">Mês</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+  <div class="card-gerencial" *ngFor="let card of cardsResumo">
+    <div class="card-textos">
+      <div class="card-titulo-menor">{{ card.tituloMenor }}</div>
+      <div class="card-titulo-maior">{{ card.tituloMaior }}</div>
+    </div>
+    <div class="card-emoji-area" [style.background]="card.emojiColor">
+      <mat-icon class="card-emoji-icon">{{ card.emoji }}</mat-icon>
+    </div>
+  </div>
+</div>

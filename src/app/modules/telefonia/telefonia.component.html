@@ -1,0 +1,172 @@
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+  <mat-tab label="Solicitações telefonia">
+    <div class="filter-buttons">
+      <button class="btn-todos-filter" mat-button 
+        [ngClass]="{'active': selectedFilter === 'TODOS'}"
+        (click)="filterStatus('TODOS')">
+        Todos
+      </button>
+    
+      <button class="btn-aberto-filter" mat-button 
+        [ngClass]="{'active': selectedFilter === 'ABERTO'}"
+        (click)="filterStatus('ABERTO')">
+        Aberto
+      </button>
+    
+      <button class="btn-andamento-filter" mat-button 
+        [ngClass]="{'active': selectedFilter === 'EM ANDAMENTO'}"
+        (click)="filterStatus('EM ANDAMENTO')">
+        Em Andamento
+      </button>
+    
+      <button class="btn-finalizado-filter" mat-button 
+        [ngClass]="{'active': selectedFilter === 'FINALIZADO'}"
+        (click)="filterStatus('FINALIZADO')">
+        Finalizados
+      </button>
+    
+      <button class="btn-cancelado-filter" mat-button 
+        [ngClass]="{'active': selectedFilter === 'CANCELADO'}"
+        (click)="filterStatus('CANCELADO')">
+        Cancelados
+      </button>
+
+      <button mat-icon-button matTooltip="Ordenar de forma decrescente" class="btn-order" 
+        (click)="toggleOrder()">
+  <mat-icon fontSet="material-icons">
+    {{ orderTelefonia === 'CRESCENTE' ? 'arrow_downward' : 'arrow_upward' }}
+  </mat-icon>
+</button>
+    </div>
+    
+
+<div class="card-container">
+  <div class="card" *ngFor="let item of filteredData">
+    <div class="status" [ngClass]="{
+        'aberto': item.status_telefonia === 'ABERTO',
+        'em-andamento': item.status_telefonia === 'EM ANDAMENTO',
+        'finalizado': item.status_telefonia === 'FINALIZADO',
+        'cancelado': item.status_telefonia === 'CANCELADO'
+      }">
+      {{ item.status_telefonia }}
+    </div>
+
+    <div class="card-content">
+      <h2>{{ item.destino }}</h2>
+      <p class="chip">Chip: {{ item.chip }}</p>
+      <p>Solicitante: {{ item.solicitante }}</p>
+      <p>Modelo: {{ item.modelo }}</p>
+      <p>Data Solicitado: {{ item.dataSolicitado }}</p>
+      <p>Criado por {{ item.criado_por }}</p>
+    </div>
+    <div class="urgencia" [ngClass]="{'urgente': item.urgencia === 'URGENTE'}">
+      {{ item.urgencia }}
+    </div>
+    <div class="card-actions">
+      <button mat-icon-button matTooltip="Editar"  class="btn-edit" (click)="openModal(item, 'card-modal-edit')">
+        <mat-icon fontSet="material-icons">edit</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Iniciar preparação"  class="btn-andamento" (click)="changeStatus(item.id, 'EM ANDAMENTO')">
+        <mat-icon fontSet="material-icons">hourglass_full</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Concluir" class="btn-check"(click)="changeStatus(item.id, 'FINALIZADO')">
+        <mat-icon fontSet="material-icons">check_circle</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Cancelar" class="btn-cancel" (click)="changeStatus(item.id, 'CANCELADO')">
+        <mat-icon fontSet="material-icons">cancel</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+</mat-tab>
+<mat-tab label="Registrar solicitação">
+  <form [formGroup]="telefoniaForm" (ngSubmit)="onSubmit()">
+    <mat-form-field  class="full-width">
+      <mat-label>Modelo</mat-label>
+      <input matInput formControlName="modelo" required>
+    </mat-form-field>
+  
+    <mat-form-field  class="full-width">
+      <mat-label>Chip</mat-label>
+      <input matInput type="number" formControlName="chip" required>
+    </mat-form-field>
+  
+    <mat-form-field  class="full-width">
+      <mat-label>Solicitante</mat-label>
+      <input matInput formControlName="solicitante" required>
+    </mat-form-field>
+  
+    <mat-form-field  class="full-width">
+      <mat-label>Data Solicitado</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="dataSolicitado" required>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  
+    <mat-form-field  class="full-width">
+      <mat-label>Urgência</mat-label>
+      <mat-select formControlName="urgencia" required>
+        <mat-option value="URGENTE">URGENTE</mat-option>
+        <mat-option value="NÃO URGENTE">NÃO URGENTE</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field  class="full-width">
+      <mat-label>Destino</mat-label>
+      <input matInput formControlName="destino" required>
+    </mat-form-field>
+  
+    <button mat-raised-button color="primary" type="submit" [disabled]="telefoniaForm.invalid">Registrar</button>
+  </form>
+  
+</mat-tab>
+</mat-tab-group>
+
+<div *ngIf="editForm" id="card-modal-edit" class="modal">
+  <div class="modal-content-arquivos">
+    <div class="modal-header">
+      <span class="modal-title">Editar registro</span>
+      <span class="close" (click)="closeModal('card-modal-edit')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()">
+        <mat-form-field  class="full-width">
+          <mat-label>Modelo</mat-label>
+          <input matInput formControlName="modelo" required>
+        </mat-form-field>
+      
+        <mat-form-field  class="full-width">
+          <mat-label>Chip</mat-label>
+          <input matInput type="number" formControlName="chip" required>
+        </mat-form-field>
+      
+        <mat-form-field  class="full-width">
+          <mat-label>Solicitante</mat-label>
+          <input matInput formControlName="solicitante" required>
+        </mat-form-field>
+      
+        <mat-form-field  class="full-width">
+          <mat-label>Data Solicitado</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dataSolicitado" required>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      
+        <mat-form-field  class="full-width">
+          <mat-label>Urgência</mat-label>
+          <mat-select formControlName="urgencia" required>
+            <mat-option value="URGENTE">URGENTE</mat-option>
+            <mat-option value="NÃO URGENTE">NÃO URGENTE</mat-option>
+          </mat-select>
+        </mat-form-field>
+      
+        <mat-form-field  class="full-width">
+          <mat-label>Destino</mat-label>
+          <input matInput formControlName="destino" required>
+        </mat-form-field>
+      
+        <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid">Registrar</button>
+      </form>
+    </div>
+  </div>
+</div>

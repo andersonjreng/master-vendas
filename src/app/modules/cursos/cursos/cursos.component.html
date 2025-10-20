@@ -1,0 +1,22 @@
+<div class="top-container">
+    <h2><mat-icon
+        style="color: #c18700;
+        margin-right: 10px;
+       "
+        >school</mat-icon>Centro de Ensino da Concrelagos</h2>
+</div>
+
+<div class="card-container">
+    <div class="card" *ngFor="let item of cursosDisponiveis">
+        <img src="{{item.img_curso}}" alt="curso" class="img-container">
+        <div class="card-content">
+            <h2>{{ item.nome_curso }}</h2>
+            <p>{{ item.descricao }}</p> 
+        </div>
+        <div class="card-actions">
+            <button mat-raised-button class="btn-iniciar" (click)="navigateToTutorial(item.id)">
+                Iniciar trilha <mat-icon>arrow_forward</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

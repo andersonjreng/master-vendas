@@ -1,0 +1,186 @@
+.container-login{
+  width: 50%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.container-visualizer {
+  position: relative;
+  width: 50%;
+  height: 100vh; /* Defina a altura conforme necessário */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
+  object-position: center;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 90%; /* Adiciona altura de 100% para ocupar toda a altura do container */
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%; /* Adiciona altura de 100% para ocupar toda a altura do container */
+  object-fit: cover;
+}
+
+footer {
+  color: rgb(61, 61, 61);
+  width: 100%;
+  text-align: center;
+  margin-top: 40px; /* Coloca o footer no final do contêiner */
+  padding: 10px; /* Adapte conforme necessário */
+  font-size: 12px;
+}
+
+
+.box{
+  padding: 20px;
+  width: 300px;
+  height: 60%;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 1020px) {
+  .container-visualizer{
+    display: none;
+  }
+
+  .container-login{
+    width: 100%;
+  }
+
+  .box{
+    width: 300px;
+  }
+}
+
+@media (max-width: 370px) {
+  .box{
+    width: 270px;
+  }
+}
+
+/*Styles do toast*/
+.styleSnackBarToast_success {
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: white;
+  --mdc-snackbar-container-color: #3f8d41 !important;
+}
+.styleSnackBarToast_alert {
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: white;
+  --mdc-snackbar-container-color: #0557e8 !important;
+}
+.styleSnackBarToast_error {
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: white;
+  --mdc-snackbar-container-color: #F44336 !important;
+}
+
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.mat-mdc-form-field-infix {
+  min-height: 35px;
+}
+
+.custom-mat-form-field .mat-form-field-ripple {
+  display: none;
+}
+
+.custom-mat-form-field .mat-form-field-outline {
+  border: none;
+}
+
+
+
+/*Estilização de barra de rolagem*/
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #737373 transparent;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    padding: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #737373;
+    padding: 0px;
+    border-radius: 15px;
+}
+
+mat-form-field {
+  width: 80%;
+  margin: 0 auto; /* Centralize horizontalmente */
+  text-align: center; /* Centralize o conteúdo de texto */
+  font-size: 18px!important;
+}
+
+.mat-select-value-text {
+  font-size: 16px; /* Tamanho da fonte desejado */
+  /* Outros estilos que você deseja aplicar */
+}
+
+
+.loading-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loading-spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+input[type="password"] {
+  font-size: 18px; /* Ajuste o tamanho do texto conforme necessário */
+  font-weight: bold;
+}
+
+input[type="password"]::placeholder {
+  font-size: 16px;
+
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+

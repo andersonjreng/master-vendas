@@ -1,0 +1,90 @@
+.filtros-vendas {
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  align-items: flex-end;
+
+  mat-form-field {
+    min-width: 180px;
+    flex: 1 1 180px;
+  }
+}
+
+table {
+  margin: 10px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+
+  th, td {
+    padding: 8px 12px;
+    text-align: left;
+  }
+
+  th {
+    background: #f5f5f5;
+    font-weight: 600;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  tr:nth-child(even) {
+    background: #fafafa;
+  }
+
+  tr:hover {
+    background: #e3f2fd;
+  }
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.mat-icon-button {
+  color: #1976d2;
+}
+
+@media (max-width: 900px) {
+  .filtros-vendas {
+    flex-direction: column;
+    gap: 8px;
+  }
+  table, th, td {
+    font-size: 13px;
+  }
+}
+
+.btn-limpar, .btn-excel, .btn-adicionar {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.btn-limpar mat-icon,
+.btn-excel mat-icon,
+.btn-adicionar mat-icon {
+  font-size: 24px;
+}
+
+.btn-limpar:hover {
+  background-color: rgb(61, 61, 61);
+  color: white;
+}
+
+.btn-excel:hover {
+  background-color: rgb(0, 146, 22);
+  color: white;
+}
+
+.btn-adicionar:hover {
+  background-color: #1976d2;
+  color: white;
+}

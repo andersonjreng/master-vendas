@@ -1,0 +1,79 @@
+.guias-atendimentos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.botao {
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 60px;
+  font-size: 12px;
+  margin-bottom: -25px;
+  cursor: pointer;
+}
+
+
+.btn-limpar, .btn-excel, .btn-adicionar {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.btn-limpar mat-icon,
+.btn-excel mat-icon,
+.btn-adicionar mat-icon {
+  font-size: 24px;
+}
+
+.btn-limpar:hover {
+  background-color: rgb(61, 61, 61);
+  color: white;
+}
+
+.btn-excel:hover {
+  background-color: rgb(0, 146, 22);
+  color: white;
+}
+
+.btn-adicionar:hover {
+  background-color: rgb(0, 146, 22);
+  color: white;
+}
+
+mat-table {
+  width: 100%;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  text-align: center;
+}
+
+.modal-content-arquivos,
+.modal-content-delete {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 50%;
+  min-height: 40%;
+  max-height: 80%;
+  overflow: auto;
+  margin: 0 auto;
+  background-color: #fefefe;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}

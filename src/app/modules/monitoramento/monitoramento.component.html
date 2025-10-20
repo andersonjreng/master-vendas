@@ -1,0 +1,406 @@
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+    <mat-tab label="Registrar">
+      <div>
+        <form [formGroup]="monitoramentoForm" (ngSubmit)="onSubmit()">
+
+            <div>
+              <mat-form-field>
+                <mat-label>Central</mat-label>
+                <input type="text" matInput
+                       [formControl]="usinaControl"
+                       id="usina"
+                       formControlName="usina"
+                       [matAutocomplete]="autoUsina"
+                       [(ngModel)]="usinaKeyword"
+                       (ngModelChange)="filterUsinas()"
+                       [value]="usinaKeywordName">
+                <mat-autocomplete #autoUsina="matAutocomplete" [displayWith]="displayFnUsina" (optionSelected)="optionSelectedUsina($event)">
+                  <mat-option *ngFor="let option of filteredUsinas | async" [value]="option" (click)="choseUsina(option)">
+                    {{ option }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          
+            <div>
+              <mat-form-field>
+                <mat-label>Solicitante</mat-label>
+                <input matInput formControlName="solicitante" id="solicitante">
+              </mat-form-field>
+            </div>
+          
+            <div>
+              <mat-form-field>
+                <mat-label>Tipo de Chamado</mat-label>
+                <mat-select formControlName="tipoChamado" (selectionChange)="onTipoChamadoChange($event.value)">
+                  <mat-option *ngFor="let tipo of tiposChamados" [value]="tipo">{{ tipo }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div *ngIf="monitoramentoForm.get('tipoRelatorio')?.validator">
+              <mat-form-field>
+                <mat-label>Tipo de Relatório</mat-label>
+                <mat-select formControlName="tipoRelatorio" id="tipoRelatorio">
+                  <mat-option *ngFor="let tipo of tiposRelatorios" [value]="tipo">{{ tipo }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div *ngIf="monitoramentoForm.get('tipoExpediente')?.validator">
+              <mat-form-field>
+                <mat-label>Tipo de Expediente</mat-label>
+                <mat-select formControlName="tipoExpediente" id="noturno" (selectionChange)="onTipoExpedienteChange($event.value)">
+                  <mat-option *ngFor="let tipo of tiposExpedientes" [value]="tipo">{{ tipo }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div *ngIf="monitoramentoForm.get('foiAvisado')?.validator">
+              <mat-form-field>
+                <mat-label>Foi Avisado?</mat-label>
+                <mat-select formControlName="foiAvisado" id="foiAvisado" (selectionChange)="onFoiAvisadoChange($event.value)">
+                  <mat-option *ngFor="let option of foiAvisadoOptions" [value]="option">{{ option }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div *ngIf="monitoramentoForm.get('colaboradorAvisado')?.validator">
+              <mat-form-field>
+                <mat-label>Colaborador Avisado</mat-label>
+                <input matInput formControlName="colaboradorAvisado" id="colaboradorAvisado">
+              </mat-form-field>
+            </div>
+          
+            <div *ngIf="monitoramentoForm.get('foiIdentificado')?.validator">
+              <mat-form-field>
+                <mat-label>Foi Identificado?</mat-label>
+                <mat-select formControlName="foiIdentificado" id="foiIdentificado">
+                  <mat-option *ngFor="let option of foiIdentificadoOptions" [value]="option">{{ option }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div>
+              <mat-form-field>
+                <mat-label>Data do Atendimento</mat-label>
+                <input matInput id="dataAtendimento" formControlName="dataAtendimento" type="date">
+              </mat-form-field>
+            </div>
+          
+            <div>
+              <mat-form-field>
+                <mat-label>Início do Atendimento</mat-label>
+                <input matInput id="inicioDoAtendimento" formControlName="inicioDoAtendimento" type="time">
+              </mat-form-field>
+            </div>
+          
+            <div>
+              <mat-form-field>
+                <mat-label>Fim do Atendimento</mat-label>
+                <input matInput id="fimDoAtendimento" formControlName="fimDoAtendimento" type="time">
+              </mat-form-field>
+            </div>
+          
+            <div>
+              <mat-form-field>
+                <mat-label>Observação</mat-label>
+                <input matInput formControlName="observacao" id="observacao">
+              </mat-form-field>
+            </div>
+          
+            <div>
+              <button mat-raised-button color="primary" type="submit" [disabled]="monitoramentoForm.invalid">
+                Registrar Monitoramento
+              </button>
+            </div>
+          </form>
+    </div>
+
+      
+    </mat-tab>
+    
+      
+    <mat-tab label="Relatório">
+        <div class="filter-container">
+            <!-- Filtro de Atendente -->
+            <mat-form-field appearance="outline">
+              <mat-label>Atendente</mat-label>
+              <mat-select [formControl]="atendenteFilter" (selectionChange)="applyFilter($event, 'atendente')">
+                <mat-option *ngFor="let option of atendentesDisponiveis" [value]="option">{{ option }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+        
+            <!-- Filtro de Usina -->
+            <mat-form-field appearance="outline">
+              <mat-label>Usina</mat-label>
+              <mat-select [formControl]="usinaFilter" (selectionChange)="applyFilter($event, 'usina')">
+                <mat-option *ngFor="let option of usinas" [value]="option">{{ option }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+        
+            <!-- Filtro de Intervalo de Datas -->
+            <mat-form-field appearance="outline">
+              <mat-label>Intervalo de Datas</mat-label>
+              <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate placeholder="Data Inicial" [(ngModel)]="dateRange.start">
+                <input matEndDate placeholder="Data Final" [(ngModel)]="dateRange.end" (dateChange)="chamadaTeste()">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+        
+            <!-- Filtro de Tipo de Chamado -->
+            <mat-form-field appearance="outline">
+              <mat-label>Tipo de Chamado</mat-label>
+              <mat-select [formControl]="tipoChamadoFilter" (selectionChange)="applyFilter($event, 'tipoChamado')">
+                <mat-option *ngFor="let option of tiposChamados" [value]="option">{{ option }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+
+          <div style="display: flex; justify-content: center; gap: 10px; margin-top: -20px; margin-bottom: 10px;">
+            <button mat-icon-button class="btn-limpar" (click)="clearFilters()"
+            matTooltip="Limpar filtro">
+              <mat-icon fontSet="material-icons">backspace</mat-icon>
+            </button>
+            <button mat-icon-button class="btn-excel" (click)="exportToExcel()"
+            matTooltip="Exportar para Excel">
+              <mat-icon fontSet="material-icons">import_export</mat-icon>
+            </button>
+          </div>
+
+          <mat-table [dataSource]="dataSource" matSort>
+            <!-- Coluna ID -->
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
+            </ng-container>
+        
+            <!-- Coluna Atendente -->
+            <ng-container matColumnDef="atendente">
+              <mat-header-cell *matHeaderCellDef>Atendente</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.atendente }}</mat-cell>
+            </ng-container>
+        
+            <!-- Coluna Usina -->
+            <ng-container matColumnDef="usina">
+              <mat-header-cell *matHeaderCellDef>Usina</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.usina }}</mat-cell>
+            </ng-container>
+        
+            <!-- Coluna Solicitante -->
+            <ng-container matColumnDef="solicitante">
+              <mat-header-cell *matHeaderCellDef>Solicitante</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.solicitante }}</mat-cell>
+            </ng-container>
+        
+            <!-- Coluna Data do Atendimento -->
+            <ng-container matColumnDef="dataAtendimento">
+              <mat-header-cell *matHeaderCellDef>Data do Atendimento</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.dataAtendimento | date: 'dd/MM/yyyy' }}</mat-cell>
+            </ng-container>
+        
+            <!-- Coluna Início do Atendimento -->
+            <ng-container matColumnDef="inicioDoAtendimento">
+              <mat-header-cell *matHeaderCellDef>Início do Atendimento</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.inicioDoAtendimento }}</mat-cell>
+            </ng-container>
+        
+            <!-- Coluna Fim do Atendimento -->
+            <ng-container matColumnDef="fimDoAtendimento">
+              <mat-header-cell *matHeaderCellDef>Fim do Atendimento</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.fimDoAtendimento }}</mat-cell>
+            </ng-container>
+        
+            <!-- Coluna Tipo de Chamado -->
+            <ng-container matColumnDef="tipoChamado">
+              <mat-header-cell *matHeaderCellDef>Tipo de Chamado</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.tipoChamado }}</mat-cell>
+            </ng-container>
+        
+            <!-- Coluna Observação -->
+            <ng-container matColumnDef="observacao">
+              <mat-header-cell *matHeaderCellDef>Observação</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.observacao }}</mat-cell>
+            </ng-container>
+            
+        
+            <!-- Coluna Ações -->
+            <ng-container matColumnDef="acoes">
+              <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="editarRegistro(element)">
+                    <mat-icon>edit</mat-icon>
+                    <span>Editar</span>
+                  </button>
+                  <button mat-menu-item (click)="openModalExcluir(element)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Excluir</span>
+                  </button>
+                </mat-menu>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        
+          <mat-paginator [pageSizeOptions]="[10, 20, 50]" [pageSize]="10" showFirstLastButtons></mat-paginator>
+
+
+    </mat-tab>
+    
+      
+  </mat-tab-group>
+
+  <div id="card-modal-edit" class="modal">
+    <div class="modal-content-arquivos">
+      <div class="modal-header">
+        <span class="modal-title">Editar Atendimento</span>
+        <span class="close" (click)="closeModal('card-modal-edit')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()">
+
+          <div>
+            <mat-form-field>
+              <mat-label>Central</mat-label>
+              <input type="text" matInput
+                     [formControl]="usinaControl"
+                     id="usina"
+                     formControlName="usina"
+                     [matAutocomplete]="autoUsina"
+                     [(ngModel)]="usinaKeyword"
+                     (ngModelChange)="filterUsinas()"
+                     [value]="usinaKeywordName">
+              <mat-autocomplete #autoUsina="matAutocomplete" [displayWith]="displayFnUsina" (optionSelected)="optionSelectedUsina($event)">
+                <mat-option *ngFor="let option of filteredUsinas | async" [value]="option" (click)="choseUsina(option)">
+                  {{ option }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        
+          <div>
+            <mat-form-field>
+              <mat-label>Solicitante</mat-label>
+              <input matInput formControlName="solicitante" id="solicitante">
+            </mat-form-field>
+          </div>
+        
+          <div>
+            <mat-form-field>
+              <mat-label>Tipo de Chamado</mat-label>
+              <mat-select formControlName="tipoChamado" (selectionChange)="onTipoChamadoChange($event.value)">
+                <mat-option *ngFor="let tipo of tiposChamados" [value]="tipo">{{ tipo }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        
+          <div *ngIf="editForm.get('tipoRelatorio')?.validator">
+            <mat-form-field>
+              <mat-label>Tipo de Relatório</mat-label>
+              <mat-select formControlName="tipoRelatorio" id="tipoRelatorio">
+                <mat-option *ngFor="let tipo of tiposRelatorios" [value]="tipo">{{ tipo }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        
+          <div *ngIf="editForm.get('tipoExpediente')?.validator">
+            <mat-form-field>
+              <mat-label>Tipo de Expediente</mat-label>
+              <mat-select formControlName="tipoExpediente" id="noturno" (selectionChange)="onTipoExpedienteChange($event.value)">
+                <mat-option *ngFor="let tipo of tiposExpedientes" [value]="tipo">{{ tipo }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        
+          <div *ngIf="editForm.get('foiAvisado')?.validator">
+            <mat-form-field>
+              <mat-label>Foi Avisado?</mat-label>
+              <mat-select formControlName="foiAvisado" id="foiAvisado" (selectionChange)="onFoiAvisadoChange($event.value)">
+                <mat-option *ngFor="let option of foiAvisadoOptions" [value]="option">{{ option }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        
+          <div *ngIf="editForm.get('colaboradorAvisado')?.validator">
+            <mat-form-field>
+              <mat-label>Colaborador Avisado</mat-label>
+              <input matInput formControlName="colaboradorAvisado" id="colaboradorAvisado">
+            </mat-form-field>
+          </div>
+        
+          <div *ngIf="editForm.get('foiIdentificado')?.validator">
+            <mat-form-field>
+              <mat-label>Foi Identificado?</mat-label>
+              <mat-select formControlName="foiIdentificado" id="foiIdentificado">
+                <mat-option *ngFor="let option of foiIdentificadoOptions" [value]="option">{{ option }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        
+          <div>
+            <mat-form-field>
+              <mat-label>Data do Atendimento</mat-label>
+              <input matInput id="dataAtendimento" formControlName="dataAtendimento" type="date">
+            </mat-form-field>
+          </div>
+        
+          <div>
+            <mat-form-field>
+              <mat-label>Início do Atendimento</mat-label>
+              <input matInput id="inicioDoAtendimento" formControlName="inicioDoAtendimento" type="time">
+            </mat-form-field>
+          </div>
+        
+          <div>
+            <mat-form-field>
+              <mat-label>Fim do Atendimento</mat-label>
+              <input matInput id="fimDoAtendimento" formControlName="fimDoAtendimento" type="time">
+            </mat-form-field>
+          </div>
+        
+          <div>
+            <mat-form-field>
+              <mat-label>Observação</mat-label>
+              <input matInput formControlName="observacao" id="observacao">
+            </mat-form-field>
+          </div>
+        
+          <div>
+            <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid">
+              Editar registro
+            </button>
+          </div>
+        </form>
+        
+  
+  </div>
+  </div>
+  </div> 
+
+  <div id="card-modal-delete" class="modal">
+    <div
+      class="modal-content-delete"
+    >
+      <div class="modal-header-delete">
+        <span class="modal-title">Excluir atendimento</span>
+        <span class="close" (click)="closeModal('card-modal-delete')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 20px;">Tem certeza que deseja excluir esse atendimento?</p>
+      </div>
+      <div class="btns">
+        <button class="btn-confirm" (click)="excluirAtendimento()" [disabled]="isSubmittingModal" [ngClass]="{'disabled-button' : isSubmittingModal}">Sim</button>
+        <button class="btn-cancel" (click)="closeModal('card-modal-delete')" [disabled]="isSubmittingModal" [ngClass]="{'disabled-button' : isSubmittingModal}">Não</button>
+      </div>
+      <mat-progress-bar *ngIf="isSubmittingModal" mode="indeterminate" style="margin-top: 20px;" ></mat-progress-bar>
+      
+    </div>
+  </div>

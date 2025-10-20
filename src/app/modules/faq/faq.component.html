@@ -1,0 +1,112 @@
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+  <mat-tab label="Registrar FAQ">
+    <div>
+      <form [formGroup]="faqForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <mat-form-field>
+          <mat-label>Título</mat-label>
+          <input matInput formControlName="titulo" required />
+          <mat-error *ngIf="faqForm.get('titulo')?.invalid">Título é obrigatório.</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+          <mat-label>Descrição</mat-label>
+          <textarea matInput formControlName="descricao" required></textarea>
+          <mat-error *ngIf="faqForm.get('descricao')?.invalid">Descrição é obrigatória.</mat-error>
+        </mat-form-field>
+    
+        <!-- Campo de Upload de Arquivo -->
+        <div>
+          
+          <input 
+            id="fileInput" 
+            style="font-size: 12px; cursor: pointer;"
+            type="file" 
+            (change)="onFileSelected($event)" 
+            accept="image/*" 
+          />
+        </div>
+    
+        <button 
+          mat-raised-button
+          style="width: 100%; "
+          color="primary" 
+          type="submit" 
+          [disabled]="faqForm.invalid"
+          [ngClass]="{'disabled-button' : faqForm.invalid || isSubmitting}">
+          Enviar
+        </button>
+        <mat-progress-bar *ngIf="isSubmitting" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+      </form>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="FAQ">
+    <div style="margin: 10px;">
+      <mat-form-field
+      appearance="outline"
+      class="search-field"
+      floatLabel="always"
+      subscriptSizing="dynamic">
+        <mat-icon matPrefix>search</mat-icon>
+        <mat-label>Pesquisar</mat-label>
+        <input matInput [(ngModel)]="searchText" (input)="filterFaqs()"/>
+      </mat-form-field>
+    </div>
+    
+    <div *ngIf="faqsVazio" class="no-faqs-message">
+      <p>Não há FAQs cadastradas no momento.</p>
+    </div>
+
+    <mat-accordion class="example-headers-align">
+      <mat-expansion-panel *ngFor="let panel of filteredFaqs; let i = index" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <strong>{{ panel.titulo }}</strong>
+          </mat-panel-title>
+          <mat-panel-description>
+            Clique para expandir
+            <mat-icon>expand_more</mat-icon>
+          </mat-panel-description>
+          <!-- Ícone de lixeira para exclusão -->
+          <button mat-icon-button color="warn" (click)="openModal(panel.id)" style="margin-left: auto;">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-expansion-panel-header>
+    
+        <p style="color: rgb(147, 147, 147);">Criado em {{ panel.created_at }} por {{ panel.userName }}</p>
+        
+        <p [innerHTML]="panel.descricao | preserveNewLines"></p>
+    
+        <!-- Exibindo imagens, caso existam -->
+        <div *ngIf="panel.imagem && panel.imagem.length">
+          <img [src]="'http://192.168.0.15/concrelagos-api/' + panel.imagem" alt="Imagem do problema" style="max-width: 100%; margin-bottom: 10px;">
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    
+  </mat-tab>
+
+
+
+</mat-tab-group>
+
+<div id="card-modal-confirm" class="modal">
+  <div class="modal-content-arquivos">
+    <div class="modal-header-restrito">
+      <span class="modal-title">Tem certeza que deseja deletar FAQ?</span>
+      <span class="close" (click)="closeModal('card-modal-confirm')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form style="width: 100%;">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>Senha</mat-label>
+          <input matInput [type]="'password'" [(ngModel)]="restritoPassword" name="restritoPassword" style="font-size: 22px">
+        </mat-form-field>
+        <div class="modal-footer" style="margin-top: -15px;">
+          <button class="btn-acess" (click)="openModalConfirm()">Deletar</button>
+          <button class="btn-cancel" (click)="closeModal('card-modal-confirm')">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

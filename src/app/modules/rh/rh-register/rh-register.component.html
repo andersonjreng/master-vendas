@@ -1,0 +1,85 @@
+<div class="btn-container">
+<button (click)="returnRh()" class="btn-return"><i class="material-icons" style="font-size: 15px;">arrow_back</i> Voltar</button>
+</div>
+<form [formGroup]="rhForm" (ngSubmit)="onSubmit()">
+
+
+          <mat-form-field>
+            <mat-label>Solicitante</mat-label>
+            <input matInput id="solicitante" formControlName="solicitante">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Cargo</mat-label>
+            <input matInput id="cargo" formControlName="cargo">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Tipo de Contratação</mat-label>
+            <mat-select id="tipoContratacao" formControlName="tipoContratacao">
+              <mat-option *ngFor="let tipo of tiposContratacao" [value]="tipo">
+                {{ tipo }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          
+        <div>
+          <mat-form-field>
+            <mat-label>Usina</mat-label>
+            <input type="text" matInput
+                   [formControl]="usinaControl"
+                   id="usina"
+                   formControlName="usina"
+                   [matAutocomplete]="autoUsina"
+                   [(ngModel)]="usinaKeyword"
+                   (ngModelChange)="validacaoMatriz($event)"
+                   (input)="filterUsinas()"
+                   [value]="usinaKeywordName">
+            <mat-autocomplete #autoUsina="matAutocomplete" [displayWith]="displayFnUsina" (optionSelected)="optionSelectedUsina($event)">
+              <mat-option *ngFor="let option of filteredUsinas | async" [value]="option" (click)="choseUsina(option)">
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="rhForm.controls['usina'].hasError('required')">
+              A usina é obrigatória.
+            </mat-error>
+            <mat-error *ngIf="rhForm.controls['usina'].hasError('usinaInvalida')">
+              Selecione uma usina da lista.
+            </mat-error>
+          </mat-form-field>     
+        </div>
+
+          <mat-form-field>
+            <mat-label>Setor</mat-label>
+            <input matInput id="setor" formControlName="setor">
+          </mat-form-field>
+
+           <mat-form-field *ngIf="isMatriz">
+            <mat-label>Nível</mat-label>
+            <mat-select id="nivel" formControlName="nivel">
+              <mat-option *ngFor="let nivel of niveisCargos" [value]="nivel">
+                {{ nivel }}
+              </mat-option>
+              </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="!isMatriz">
+            <mat-label>Nível</mat-label>
+            <mat-select id="nivel" formControlName="nivel">
+              <mat-option *ngFor="let nivel of niveisCargosUsinas" [value]="nivel">
+                {{ nivel }}
+              </mat-option>
+              </mat-select>
+          </mat-form-field>
+
+           <mat-form-field>
+            <mat-label>Observação</mat-label>
+            <input matInput id="observacao" formControlName="observacao">
+          </mat-form-field>
+
+          <div>
+          <button mat-raised-button color="primary" type="submit" [disabled]="rhForm.invalid || isSubmitting" [ngClass]="{'disabled-button' : rhForm.invalid || isSubmitting}"> <mat-icon>send</mat-icon> Enviar Solicitação</button>
+          <mat-progress-bar *ngIf="isSubmitting" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+        </div>
+</form>

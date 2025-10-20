@@ -1,0 +1,213 @@
+
+.settings-container {
+    padding: 20px;
+  }
+  
+  .setting-item-container {
+    background-color: #d89803; /* Fundo dos itens (cinza claro) */
+    border-radius: 8px; /* Cantos arredondados */
+    margin-bottom: 10px; /* Espaço entre os itens */
+    padding: 10px; /* Espaço interno */
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Adiciona uma sombra leve */
+    
+  }
+  
+  .setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease; /* Animação suave ao passar o mouse */
+  }
+
+  .setting-item:hover {
+    padding: 20px;
+  }
+  
+  .setting-name {
+    display: flex;
+    align-items: center; /* Alinha ícone e texto verticalmente */
+    gap: 8px; /* Espaço entre o ícone e o texto */
+  }
+  
+  .setting-name mat-icon {
+    font-size: 24px; /* Ajuste o tamanho do ícone conforme necessário */
+    color: #6a6a6a; /* Cor opcional para o ícone */
+  }
+  
+  .actions button {
+    margin-left: 10px;
+  }
+  
+  
+.modal-content-casos {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 50%;
+    height: 50%;
+    overflow: auto; /* Alterado para auto */
+    margin: 0 auto;
+    background-color: #fefefe;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  // .modal-header {
+  //   background-color: rgb(61, 61, 61); /* Cor de fundo da parte superior */
+  //   color: #fff; /* Cor do texto da parte superior */
+  //   padding: 10px;
+  //   position: sticky;
+  //   top: 0;
+  //   z-index: 2;
+  //   border-top-left-radius: 10px;
+  // }
+  
+  .modal-header-casos {
+    background-color: #2c363b; /* Cor de fundo da parte superior */
+    color: #fff; /* Cor do texto da parte superior */
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    border-top-left-radius: 10px;
+  }
+  
+  .modal-body {
+    width: 100%;
+    padding: 20px;
+    display: flex; /* Alterado de block para flex */
+    justify-content: center;
+    align-items: center; /* Adicionado para centralizar verticalmente */
+    margin-bottom: -15px;
+  }
+
+  /* Estilos do título do modal */
+.modal-title {
+    margin-top: 0;
+    font-size: 20px;
+  }
+  
+  .modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    text-align: center; /* Centralizar o conteúdo do modal */
+  }
+
+  .close {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 3;
+  }
+  
+  .close:hover {
+    color: rgb(253, 60, 60);
+  }
+
+  .disabled-button {
+    opacity: 0.5; /* Deixa o botão mais transparente */
+    cursor: not-allowed; /* Mostra que o botão está desabilitado */
+  }
+
+  form {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    
+  }
+  
+  form div {
+    margin-bottom: 20px;
+  }
+  
+  mat-form-field {
+    margin-top: 20px;
+    flex: 1;
+    width: 100%;
+  }
+
+
+  .mat-mdc-tab-group, .mat-mdc-tab-nav-bar{
+    --mat-tab-header-active-focus-label-text-color: #d89803;
+    --mat-tab-header-active-label-text-color : #d89803;
+    --mat-tab-header-inactive-label-text-color: rgb(0 0 0 / 60%);
+    --mat-tab-header-inactive-focus-label-text-color: rgba(37, 37, 37, 0.6);
+    --mat-tab-header-inactive-hover-label-text-color : rgba(37, 37, 37, 0.6);
+    --mdc-tab-indicator-active-indicator-color: #d89803;
+    --mat-tab-header-active-hover-label-text-color: #d89803; // Fix here
+    --mat-tab-header-active-ripple-color: #d89803;
+    --mat-tab-header-inactive-ripple-color: #232222;
+  }
+
+  
+/* Ajuste da lista */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+/* Ajuste dos itens da lista */
+li {
+  display: flex;
+  justify-content: space-between; /* Nome na esquerda, botão na direita */
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+}
+
+/* Estilização do nome */
+.username {
+  font-size: 18px;
+  flex-grow: 1; /* Faz o nome ocupar o espaço disponível */
+  text-align: left;
+}
+
+/* Botão de ativação */
+.btn-ativacao {
+  background-color: #16ae05;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: all ease 0.3s;
+}
+
+.btn-ativacao:hover {
+  background-color: #00830b;
+}
+
+/* Botão vermelho para desativar */
+.btn-ativacao.desativar {
+  background-color: #dc3545;
+}
+
+.btn-ativacao.desativar:hover {
+  background-color: #b52b3a;
+}

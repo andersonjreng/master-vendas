@@ -1,0 +1,71 @@
+
+form {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    
+  }
+  
+  form div {
+    margin-bottom: 20px;
+  }
+  
+  mat-form-field {
+    margin-top: 20px;
+    flex: 1;
+    width: 100%;
+  }
+  
+
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #d89803;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #c48900;
+  }
+
+  @media (max-width: 600px) {
+    form {
+      max-width: 100%;
+    }
+  }
+
+    .disabled-button {
+    opacity: 0.5; /* Deixa o botão mais transparente */
+    cursor: not-allowed; /* Mostra que o botão está desabilitado */
+  }
+
+  .btn-return {
+    font-size: 16px;
+    padding: 8px;
+    color: white;
+    border-radius: 3px;
+    width: 25%;
+    background-color: #d8980370;
+    transition: all 0.3s ease;
+  }
+
+  .btn-return:hover {
+    background-color: #d89803;
+  }
+
+  .btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    width: 100%;
+    
+  }

@@ -1,0 +1,314 @@
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" [color]="'primary'" >
+<mat-tab label="Suporte">
+<div class="settings-container">
+    <h1>Configurações</h1>
+    <mat-list>
+      <mat-list-item *ngFor="let setting of settings" class="setting-item-container">
+        <div class="setting-item">
+            <div class="setting-name">
+              <mat-icon style="color: #414141">{{ setting.icon }}</mat-icon>
+              <strong>{{ setting.name }}</strong>
+            </div>
+            <div class="actions">
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="openModal(setting.modal)"
+              >
+                <mat-icon>add</mat-icon>
+              </button>
+              <button
+            mat-icon-button
+            color="warn"
+            (click)="openModal(setting.type)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+            </div>
+          </div>
+          
+      </mat-list-item>
+    </mat-list>
+  </div>
+  </mat-tab>
+  <mat-tab label="Liberações">
+
+  </mat-tab>
+</mat-tab-group>
+  <div id="usinas-modal" class="modal">
+    <div
+      class="modal-content-casos"
+    >
+      <div class="modal-header-casos">
+        <span class="modal-title">Adicionar usinas</span>
+        <span class="close" (click)="closeModal('usinas-modal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="usinasForm" (ngSubmit)="onSubmitUsinas()">
+              <div>
+              <mat-form-field>
+                <mat-label>Usina</mat-label>
+                <input matInput id="nome_usina" formControlName="nome_usina">
+              </mat-form-field>
+            </div>
+
+            <div>
+              <button mat-raised-button style="background-color: #d89803; color: white;" type="submit" [disabled]="usinasForm.invalid || isSubmittingModal" [ngClass]="{'disabled-button' : usinasForm.invalid || isSubmittingModal}">Adicionar Usina</button>
+              <mat-progress-bar *ngIf="isSubmittingModal" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+            </div>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+
+  <div id="usinas-delete-modal" class="modal">
+    <div
+      class="modal-content-casos"
+    >
+      <div class="modal-header-casos" style="background-color: #f52020;">
+        <span class="modal-title">Remover usinas</span>
+        <span class="close" (click)="closeModal('usinas-delete-modal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="usinasDeleteForm" (ngSubmit)="onSubmitDeleteUsinas()">
+          <div>
+            <mat-form-field>
+              <mat-label>Usina</mat-label>
+              <mat-select formControlName="usina_delete">
+                <mat-option *ngFor="let usina of usinasDisponiveis" [value]="usina">
+                  {{ usina.nome_usina }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+            <div>
+              <button mat-raised-button style="background-color: #d89803; color: white;" type="submit" [disabled]="usinasDeleteForm.invalid || isSubmittingModal" [ngClass]="{'disabled-button' : usinasDeleteForm.invalid || isSubmittingModal}">Remover Usina</button>
+              <mat-progress-bar *ngIf="isSubmittingModal" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+            </div>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+
+  <div id="categoria-modal" class="modal">
+    <div
+      class="modal-content-casos"
+    >
+      <div class="modal-header-casos">
+        <span class="modal-title">Adicionar categoria</span>
+        <span class="close" (click)="closeModal('categoria-modal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="categoriaForm" (ngSubmit)="onSubmitCategorias()">
+              <div>
+              <mat-form-field>
+                <mat-label>Categoria</mat-label>
+                <input matInput id="nome_categoria" formControlName="nome_categoria">
+              </mat-form-field>
+            </div>
+
+            <div>
+              <button mat-raised-button style="background-color: #d89803; color: white;" type="submit" [disabled]="categoriaForm.invalid || isSubmittingModal" [ngClass]="{'disabled-button' : categoriaForm.invalid || isSubmittingModal}">Adicionar categoria</button>
+              <mat-progress-bar *ngIf="isSubmittingModal" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+            </div>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+    
+
+  <div id="casos-modal" class="modal">
+    <div
+      class="modal-content-casos"
+    >
+      <div class="modal-header-casos">
+        <span class="modal-title">Adicionar casos</span>
+        <span class="close" (click)="closeModal('casos-modal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="casosForm" (ngSubmit)="onSubmit()">
+            <div>
+              <mat-form-field>
+                <mat-label>Origem</mat-label>
+                <mat-select formControlName="origem_caso">
+                  <mat-option *ngFor="let origem of origensCasos" [value]="origem">
+                    {{ origem }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Caso</mat-label>
+                <input matInput id="nome_caso" formControlName="nome_caso">
+              </mat-form-field>
+            </div>
+
+            <div>
+              <button mat-raised-button style="background-color: #d89803; color: white;" type="submit" [disabled]="casosForm.invalid || isSubmittingModal" [ngClass]="{'disabled-button' : casosForm.invalid || isSubmittingModal}">Adicionar Caso</button>
+              <mat-progress-bar *ngIf="isSubmittingModal" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+            </div>
+          </form>
+        
+      </div>
+  </div>
+</div>
+
+<div id="casos-modal-delete" class="modal">
+  <div
+    class="modal-content-casos"
+  >
+    <div class="modal-header-casos" style="background-color: #f52020;">
+      <span class="modal-title">Excluir casos</span>
+      <span class="close" (click)="closeModal('casos-modal-delete')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="casosForm" (ngSubmit)="onSubmitDelete()">
+          <div>
+            <mat-form-field>
+              <mat-label>Origem</mat-label>
+              <mat-select formControlName="origem_caso">
+                <mat-option *ngFor="let origem of origensCasos" [value]="origem">
+                  {{ origem }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <mat-label>Problemas</mat-label>
+              <mat-select formControlName="nome_caso">
+                <mat-option *ngFor="let caso of problemasFiltrados" [value]="caso">
+                  {{ caso.nome_caso }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <button mat-raised-button style="background-color: #f52020; color: white;" type="submit" [disabled]="casosForm.invalid || isSubmittingModal" [ngClass]="{'disabled-button' : casosForm.invalid || isSubmittingModal}">Excluir Caso</button>
+            <mat-progress-bar *ngIf="isSubmittingModal" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+          </div>
+        </form>
+
+        
+      
+    </div>
+</div>
+</div>
+
+<div id="users-modal" class="modal">
+  <div
+    class="modal-content-casos"
+  >
+    <div class="modal-header-casos">
+      <span class="modal-title">Adicionar usuários</span>
+      <span class="close" (click)="closeModal('users-modal')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="permissionsForm" (ngSubmit)="onSubmitUsers()">
+          <div>
+            <mat-form-field>
+              <mat-label>Permissão</mat-label>
+              <mat-select formControlName="permission">
+                <mat-option *ngFor="let permission of permissionsUsers" [value]="permission">
+                  {{ permission }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Nome de usuário</mat-label>
+              <input matInput id="username" formControlName="username">
+            </mat-form-field>
+          </div>
+
+            <div>
+            <mat-form-field>
+              <mat-label>E-mail</mat-label>
+              <input matInput id="email" formControlName="email">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Senha</mat-label>
+              <input matInput id="password" type="password" formControlName="password">
+            </mat-form-field>
+          </div>
+          
+          
+
+          <div>
+            <button mat-raised-button style="background-color: #d89803; color: white;" type="submit" [disabled]="permissionsForm.invalid || isSubmittingModal" [ngClass]="{'disabled-button' : permissionsForm.invalid || isSubmittingModal}">Adicionar Usuário</button>
+            <mat-progress-bar *ngIf="isSubmittingModal" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+          </div>
+        </form>
+      </div>
+</div>
+</div>
+
+<div id="categoria-delete-modal" class="modal">
+  <div
+    class="modal-content-casos"
+  >
+    <div class="modal-header-casos" style="background-color: #f52020;">
+      <span class="modal-title">Remover categorias</span>
+      <span class="close" (click)="closeModal('categoria-delete-modal')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="categoriasDeleteForm" (ngSubmit)="onSubmitDeleteCategorias()">
+        <div>
+          <mat-form-field>
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="categoria_delete">
+              <mat-option *ngFor="let categoria of categoriasDisponiveis" [value]="categoria">
+                {{ categoria.nome_categoria }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+          <div>
+            <button mat-raised-button style="background-color: #d89803; color: white;" type="submit" [disabled]="categoriasDeleteForm.invalid || isSubmittingModal" [ngClass]="{'disabled-button' : categoriasDeleteForm.invalid || isSubmittingModal}">Remover Categoria</button>
+            <mat-progress-bar *ngIf="isSubmittingModal" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+          </div>
+        </form>
+      
+    </div>
+  </div>
+</div>
+
+<div id="users-ativacao-modal" class="modal">
+  <div class="modal-content-casos">
+    <div class="modal-header-casos">
+      <span class="modal-title">Usuários</span>
+      <span class="close" (click)="closeModal('users-ativacao-modal')">&times;</span>
+    </div>
+    <div class="modal-body">
+      <ul *ngIf="usersDisponiveis.length > 0; else noUsers">
+        <li *ngFor="let user of usersDisponiveis">
+          <span style="font-size: 18px;">{{ user.username }}</span>
+          <button
+              class="btn-ativacao"
+              [ngClass]="{ 'desativar': user.ativo === '1' }"
+              (click)="toggleAtivacao(user)"
+          >
+              {{ user.ativo === '1' ? 'Desativar' : 'Ativar' }}
+          </button>
+        </li>
+      </ul>
+      
+      <ng-template #noUsers>
+        <p>Nenhum usuário disponível.</p>
+      </ng-template>
+      
+      
+    </div>
+  </div>
+</div>

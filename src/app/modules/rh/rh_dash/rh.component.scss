@@ -1,0 +1,504 @@
+mat-form-field {
+  margin-right: 15px;
+}
+
+.field-edit {
+  margin-top: 20px;
+  flex: 1;
+  width: 100%;
+}
+
+
+  .btn-add, .btn-limpar {
+    width: 48px; /* Ajuste para garantir espaço suficiente */
+    height: 48px;
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-add mat-icon,
+  .btn-limpar mat-icon {
+    font-size: 24px; /* Mantém o tamanho do ícone adequado */
+  }
+
+  .btn-limpar:hover {
+    background-color: rgb(61, 61, 61);
+    color: white;
+  }
+  
+  .btn-add:hover {
+    background-color: rgb(61, 61, 61);
+    color: white;
+  }
+
+.container-master { /* Nomeie essa classe como achar melhor */
+  display: flex;
+  justify-content: space-between; /* Espaça os itens ao máximo, jogando o primeiro para a esquerda e o último para a direita */
+  align-items: center; /* Alinha os itens verticalmente ao centro, se desejar */
+}
+
+.card {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: 0.2s ease-in-out;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between; /* Mantém o cargo à esquerda e o grupo de ações à direita */
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.actions {
+  display: flex; /* Transforma o contêiner de ações em um flexbox */
+  align-items: center; /* Alinha verticalmente o botão e o status */
+  gap: 8px; /* Adiciona um pequeno espaço entre o botão e o status */
+}
+
+.edit-button {
+  background: none; /* Remove o fundo padrão do botão */
+  border: none; /* Remove a borda padrão do botão */
+  cursor: pointer;
+  color: #2c2c2cb4; /* Cor para o ícone de lápis (exemplo) */
+  font-size: 16px; /* Tamanho do ícone */
+  padding: 0; /* Remove padding padrão do botão */
+  display: flex; /* Para alinhar o ícone se houver mais elementos */
+  align-items: center; /* Alinha o ícone verticalmente */
+  justify-content: center; /* Centraliza o ícone */
+}
+
+/* Opcional: Efeitos de hover para o botão */
+.edit-button:hover {
+  opacity: 0.8;
+}
+
+.cargo {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.status {
+  font-size: 10px;
+  padding: 2px 20px;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: white;
+  display: flex; /* Para alinhar o ícone e o texto */
+  align-items: center; /* Alinhar verticalmente */
+  gap: 5px; /* Espaçamento entre o ícone e o texto */
+}
+
+.status.pendente {
+  background-color: rgba(238, 194, 0, 0.253); /* amarelo */
+  color: #e09813;
+}
+
+.status.aprovado {
+  background-color: rgba(3, 211, 142, 0.295); /* verde */
+  color: #03b67a;
+}
+
+.status.negado {
+  background-color: #ef4444; /* vermelho */
+}
+
+.status.finalizado {
+  background-color: #007491; /* Cinza azulado */
+}
+
+.card-body p {
+  margin: 8px 0; /* Aumenta um pouco a margem para mais espaçamento */
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.card-body {
+  padding: 16px; /* Adiciona um espaçamento interno ao corpo do card */
+}
+
+.infoCard {
+  background-color: rgba(3, 211, 142, 0.295); /* verde */
+  color: #00744d;
+  padding: 5px 10px; /* Ajustei o padding horizontal para ser um pouco menor */
+  border-radius: 10px;
+  font-size: 0.8rem; /* Reduzi um pouco o tamanho da fonte para melhor encaixe */
+  margin-right: 8px; /* Espaçamento entre os spans */
+  margin-bottom: 8px; /* Espaçamento abaixo dos spans se quebrarem a linha */
+  display: inline-block; /* Permite que os spans fiquem na mesma linha e tenham margens */
+}
+
+.status-aberto {
+  background-color: rgba(3, 197, 211, 0.295); /* verde */
+  color: #006374;
+  padding: 5px 10px; /* Ajustei o padding horizontal para ser um pouco menor */
+  border-radius: 10px;
+  font-size: 0.8rem; /* Reduzi um pouco o tamanho da fonte para melhor encaixe */
+  margin-right: 8px; /* Espaçamento entre os spans */
+  margin-bottom: 8px; /* Espaçamento abaixo dos spans se quebrarem a linha */
+  display: inline-block; /* Permite que os spans fiquem na mesma linha e tenham margens */
+}
+
+.status-em-andamento {
+  background-color: rgba(197, 211, 3, 0.295); /* verde */
+  color: #727400;
+  padding: 5px 10px; /* Ajustei o padding horizontal para ser um pouco menor */
+  border-radius: 10px;
+  font-size: 0.8rem; /* Reduzi um pouco o tamanho da fonte para melhor encaixe */
+  margin-right: 8px; /* Espaçamento entre os spans */
+  margin-bottom: 8px; /* Espaçamento abaixo dos spans se quebrarem a linha */
+  display: inline-block; /* Permite que os spans fiquem na mesma linha e tenham margens */
+}
+
+.status-concluido {
+  background-color: rgba(3, 211, 142, 0.295); /* verde */
+  color: #00744d;
+  padding: 5px 10px; /* Ajustei o padding horizontal para ser um pouco menor */
+  border-radius: 10px;
+  font-size: 0.8rem; /* Reduzi um pouco o tamanho da fonte para melhor encaixe */
+  margin-right: 8px; /* Espaçamento entre os spans */
+  margin-bottom: 8px; /* Espaçamento abaixo dos spans se quebrarem a linha */
+  display: inline-block; /* Permite que os spans fiquem na mesma linha e tenham margens */
+}
+
+.status-desconhecido {
+  background-color: rgba(93, 3, 211, 0.295); /* verde */
+  color: #4f0074;
+  padding: 5px 10px; /* Ajustei o padding horizontal para ser um pouco menor */
+  border-radius: 10px;
+  font-size: 0.8rem; /* Reduzi um pouco o tamanho da fonte para melhor encaixe */
+  margin-right: 8px; /* Espaçamento entre os spans */
+  margin-bottom: 8px; /* Espaçamento abaixo dos spans se quebrarem a linha */
+  display: inline-block; /* Permite que os spans fiquem na mesma linha e tenham margens */
+}
+
+.card-footer {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center; /* Centraliza os itens horizontalmente */
+  gap: 16px;
+  /* flex-wrap: wrap; Remova esta linha para manter os botões na mesma linha */
+}
+
+
+
+.btn {
+  flex: 1 1 45%; /* ocupa até 45% da linha, permite quebra de linha */
+  min-width: 140px;
+  padding: 3px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.btn.finalizar {
+  color: rgb(32, 32, 32);
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn.preparar {
+  color: rgb(32, 32, 32);
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn.finalizar:hover {
+  background-color: rgba(3, 211, 142, 0.295); /* verde */
+  color: #03b67a;
+}
+
+.btn.preparar:hover {
+  color: rgb(107, 70, 0);
+  background-color: #f3e30196;
+}
+
+.btn.aprovar {
+  background-color: #10b981;
+  color: white;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn.aprovar:hover {
+  background-color: #059669;
+}
+
+.btn.negar {
+  background-color: #ef4444;
+  color: white;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn.negar:hover {
+  background-color: #dc2626;
+}
+
+.btns {
+  margin-top: -30px;
+}
+
+.filtros-container {
+  display: flex;
+  margin: 10px;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filtros-container button {
+  padding: 8px 15px;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+
+.filtros-container button.filtro-ativo {
+  color: #c48900;
+  font-weight: bold;
+
+}
+
+.filtros-container button.limpar-filtro {
+  background-color: #dc3545; /* Cor para o botão de limpar */
+  color: white;
+  border-color: #dc3545;
+}
+
+.filters-cards {
+  margin: 10px;
+}
+
+.mensagem-sem-resultados {
+  margin: 20px;
+  font-style: italic;
+  color: #777;
+}
+
+
+.mensagem-sem-resultados mat-icon {
+  font-size: 50px;
+  width: 50px;
+}
+
+
+//modal
+
+
+.modal-content-arquivos {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 50%;
+  min-height: 40%;
+  max-height: 80%; /* Alterado para height em vez de max-height */
+  overflow: auto; /* Alterado para auto */
+  margin: 0 auto;
+  background-color: #fefefe;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.modal-content-delete {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 35%;
+  height: 30%;
+  overflow: auto; /* Alterado para auto */
+  margin: 0 auto;
+  background-color: #fefefe;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.modal-content-finalizar {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 50%;
+  height: 70%;
+  overflow: auto; /* Alterado para auto */
+  margin: 0 auto;
+  background-color: #fefefe;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.modal-header {
+  background-color: rgb(61, 61, 61); /* Cor de fundo da parte superior */
+  color: #fff; /* Cor do texto da parte superior */
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-top-left-radius: 10px;
+}
+
+.modal-header-delete {
+  background-color: #dc2626; /* Cor de fundo da parte superior */
+  color: #fff; /* Cor do texto da parte superior */
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-top-left-radius: 10px;
+}
+
+.modal-header-finalizar {
+  background-color: #292929; /* Cor de fundo da parte superior */
+  color: #fff; /* Cor do texto da parte superior */
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-top-left-radius: 10px;
+}
+
+
+.close {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 3;
+}
+
+.close:hover {
+  color: rgb(253, 60, 60);
+}
+
+/* Estilos do conteúdo do modal */
+.modal-body {
+  width: 100%;
+  padding: 20px;
+  display: block; 
+  justify-content: center;
+  align-items: center; /* Adicionado para centralizar verticalmente */
+  margin-bottom: -15px;
+}
+
+
+
+.modal-body-mobile {
+  display: block;
+}
+
+/* Estilos do título do modal */
+.modal-title {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  text-align: center; /* Centralizar o conteúdo do modal */
+}
+
+.btn-confirm {
+  background-color: #0aa12d;
+  border-radius: 10px;
+  padding: 5px 30px;
+  color: white;
+  margin: 10px;
+  font-size: 14px;
+}
+
+.btn-cancel {
+  background-color: #dc2626;
+  border-radius: 10px;
+  padding: 5px 30px;
+  color: white;
+  margin: 10px;
+  font-size: 14px;
+}
+
+.subtitle {
+  font-size: 15px;
+}
+
+
+form {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    
+  }
+  
+  form div {
+    margin-bottom: 20px;
+  }
+  
+.form-div {
+  display: block;
+}
+
+.campos-form {
+  width: 100%;
+}
+
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #d89803;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #c48900;
+  }
+
+    .disabled-button {
+    opacity: 0.5; /* Deixa o botão mais transparente */
+    cursor: not-allowed; /* Mostra que o botão está desabilitado */
+  }

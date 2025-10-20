@@ -1,0 +1,152 @@
+
+<!-- Campo de filtro com autocomplete -->
+<div style="display: flex; justify-content: center; margin: 20px;">
+  <mat-form-field appearance="outline" style="width: 350px;">
+    <mat-label>Pesquisar produto</mat-label>
+    <input type="text"
+           matInput
+           [formControl]="filtroNome"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+      <mat-option *ngFor="let option of nomesFiltrados | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" style="width: 180px; margin-left: 16px;">
+  <mat-label>Status</mat-label>
+  <mat-select [(ngModel)]="filtroAtivo" (selectionChange)="filtrarPorStatus()">
+    <mat-option [value]="1">Ativos</mat-option>
+    <mat-option [value]="0">Inativos</mat-option>
+  </mat-select>
+</mat-form-field>
+</div>
+
+<div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px; margin-bottom: 10px;">
+  <button mat-icon-button class="btn-limpar" matTooltip="Limpar filtro">
+    <mat-icon fontSet="material-icons">backspace</mat-icon>
+  </button>
+  <button mat-icon-button class="btn-excel" matTooltip="Exportar para Excel">
+    <mat-icon fontSet="material-icons">import_export</mat-icon>
+  </button>
+<button mat-icon-button class="btn-adicionar" matTooltip="Adicionar Produto" (click)="abrirModalCadastro()">
+  <mat-icon fontSet="material-icons">add</mat-icon>
+</button>
+</div>
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+
+<mat-table [dataSource]="dataSource">
+
+  <!-- Nome -->
+  <ng-container matColumnDef="nome">
+    <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.nome }} </mat-cell>
+  </ng-container>
+
+  <!-- Preço -->
+  <ng-container matColumnDef="preco">
+    <mat-header-cell *matHeaderCellDef> Preço </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.preco }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="grupo">
+    <mat-header-cell *matHeaderCellDef> Grupo </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.grupo }} </mat-cell>
+  </ng-container>
+
+  <!-- Custo -->
+  <ng-container matColumnDef="custo">
+    <mat-header-cell *matHeaderCellDef> Custo </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.custo }} </mat-cell>
+  </ng-container>
+  
+
+  <!-- Ações -->
+  <ng-container matColumnDef="acoes">
+    <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary" (click)="abrirModalEdicao(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <!-- <button mat-icon-button color="warn" (click)="abrirModalExclusao(element)">
+        <mat-icon>delete</mat-icon>
+      </button> -->
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<!-- <mat-paginator [pageSizeOptions]="[10, 20, 50]" [pageSize]="10" showFirstLastButtons></mat-paginator> -->
+
+
+<!-- Modal de cadastro de produto -->
+<ng-template #modalCadastroProduto>
+  <h2 mat-dialog-title>Novo Produto</h2>
+  <mat-dialog-content [formGroup]="formProduto">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Grupo</mat-label>
+      <input matInput formControlName="grupo" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Preço de Venda</mat-label>
+      <input matInput type="number" formControlName="preco" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Custo</mat-label>
+      <input matInput type="number" formControlName="custo" required>
+    </mat-form-field>
+    <mat-slide-toggle formControlName="ativo">Ativo</mat-slide-toggle>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="primary" (click)="salvarProduto()" [disabled]="formProduto.invalid">Salvar</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<!-- Modal de edição de produto -->
+<ng-template #modalEdicaoProduto>
+  <h2 mat-dialog-title>Editar Produto</h2>
+  <mat-dialog-content [formGroup]="formProdutoEdicao">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Grupo</mat-label>
+      <input matInput formControlName="grupo" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Preço de Venda</mat-label>
+      <input matInput type="number" formControlName="preco" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Custo</mat-label>
+      <input matInput type="number" formControlName="custo" required>
+    </mat-form-field>
+    <mat-slide-toggle formControlName="ativo">Ativo</mat-slide-toggle>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="primary" (click)="salvarEdicaoProduto()" [disabled]="formProdutoEdicao.invalid">Salvar</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<!-- Modal de confirmação de exclusão -->
+<ng-template #modalExclusaoProduto>
+  <h2 mat-dialog-title style="color: #d32f2f;">Atenção!</h2>
+  <mat-dialog-content>
+    <p style="font-size: 1.2em; color: #d32f2f;">
+      Você deseja <b>excluir</b> o produto <b>{{ produtoSelecionado?.nome }}</b> permanentemente?
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="warn" (click)="confirmarExclusaoProduto()">Excluir</button>
+  </mat-dialog-actions>
+</ng-template>
